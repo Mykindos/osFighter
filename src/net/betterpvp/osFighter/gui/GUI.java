@@ -136,10 +136,10 @@ public class GUI extends JFrame {
 	private JLabel lblTaskTrain;
 	private JLabel lblTaskUntilLevel;
 	private JLabel lblWithdrawList;
-	private DefaultListModel<String> nearbyModel;
+	private DefaultListModel<FighterNPC> nearbyModel, currentModel;
 	private JList<String> listLootingItems;
-	private JList<String> listNearbyTargets;
-	private JList<String> listCurrentTargets;
+	private JList<FighterNPC> listNearbyTargets;
+	private JList<FighterNPC> listCurrentTargets;
 	private JList<String> listTasks;
 	private JPanel pnlAddItems;
 	private JPanel pnlBank;
@@ -190,7 +190,8 @@ public class GUI extends JFrame {
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
 
-		nearbyModel = new DefaultListModel<String>();
+		nearbyModel = new DefaultListModel<FighterNPC>();
+		currentModel = new DefaultListModel<FighterNPC>();
 		bgLooting = new ButtonGroup();
 		lblLogo = new JLabel();
 		buttonStart = new JButton();
@@ -199,7 +200,8 @@ public class GUI extends JFrame {
 		pnlMonsterSelection = new JPanel();
 		lblSelectTargets = new JLabel();
 		jScrollPane1 = new JScrollPane();
-		listNearbyTargets = new JList<>(nearbyModel);
+		listNearbyTargets = new JList<FighterNPC>(nearbyModel);
+		listCurrentTargets = new JList<FighterNPC>(currentModel);
 		lblORFilter = new JLabel();
 		lblTargetName = new JLabel();
 		txtTargetName = new JTextField();
@@ -207,7 +209,7 @@ public class GUI extends JFrame {
 		pnlMonsterList = new JPanel();
 		lblTargetList = new JLabel();
 		jScrollPane2 = new JScrollPane();
-		listCurrentTargets = new JList<>();
+
 		btnClearCurrent = new JButton();
 		btnRemove = new JButton();
 		btnAdd = new JButton();
@@ -384,17 +386,7 @@ public class GUI extends JFrame {
 		pnlMonsterList.add(lblTargetList);
 		lblTargetList.setBounds(10, 10, 300, 40);
 
-		listCurrentTargets.setModel(new AbstractListModel<String>() {
-			String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 
-			public int getSize() {
-				return strings.length;
-			}
-
-			public String getElementAt(int i) {
-				return strings[i];
-			}
-		});
 		jScrollPane2.setViewportView(listCurrentTargets);
 		setPreferredSize(new Dimension(745, 450));
 		pnlMonsterList.add(jScrollPane2);
@@ -416,6 +408,7 @@ public class GUI extends JFrame {
 		btnAdd.setToolTipText("Add an item to the Current Targets list");
 		jpMain.add(btnAdd);
 		btnAdd.setBounds(329, 80, 60, 40);
+		btnAdd.addActionListener(e -> addTarget());
 
 		pnlMain.addTab("Main", jpMain);
 
@@ -1026,24 +1019,46 @@ public class GUI extends JFrame {
 
 	private void loadNPCs() {
 
-		nearbyModel.clear();
+			nearbyModel.clear();
 
 
-		instance.getNpcs().getAll().forEach(npc -> {
-			FighterNPC n = new FighterNPC(npc.getName(), npc.getLevel());
-			if(npc.isAttackable()) {
-				if(!instance.getSessionData().getCurrentTargets().contains(n)) {
-
-
-
-					if(!nearbyModel.contains(n.toString())) {
-						nearbyModel.addElement(npc.getName() + ", " + npc.getLevel());
+	
+			instance.getNpcs().getAll().forEach(npc -> {
+				FighterNPC n = new FighterNPC(npc.getName(), npc.getLevel());
+				if(npc.isAttackable()) {
+					if(!modelContains(currentModel, n)) {
+						
+						if(!modelContains(nearbyModel, n)) {
+							nearbyModel.addElement(n);
+						}
 					}
 				}
+			});
+
+
+	}
+
+
+	private void addTarget() {
+		if(!listNearbyTargets.isSelectionEmpty()) {
+			FighterNPC fNpc = listNearbyTargets.getSelectedValue();
+			if(!currentModel.contains(fNpc)) {
+				currentModel.addElement(fNpc);
 			}
-		});
+		}
 
-
+		loadNPCs();
+	}
+	
+	private <T> boolean modelContains(DefaultListModel<T> model, T clazz) {
+		for(int i = 0; i < model.size(); i++) {
+			T x = model.get(i);
+			if(clazz.equals(x)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 
