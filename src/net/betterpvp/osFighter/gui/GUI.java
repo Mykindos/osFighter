@@ -35,6 +35,8 @@ import javax.swing.table.DefaultTableModel;
 
 import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.data.FighterNPC;
+import net.betterpvp.osFighter.states.looting.LootCondition;
+import net.betterpvp.osFighter.states.looting.LootedItem;
 
 /**
  *
@@ -137,7 +139,8 @@ public class GUI extends JFrame {
 	private JLabel lblTaskUntilLevel;
 	private JLabel lblWithdrawList;
 	private DefaultListModel<FighterNPC> nearbyModel, currentModel;
-	private JList<String> listLootingItems;
+	private DefaultListModel<LootedItem> itemModel;
+	private JList<LootedItem> listLootingItems;
 	private JList<FighterNPC> listNearbyTargets;
 	private JList<FighterNPC> listCurrentTargets;
 	private JList<String> listTasks;
@@ -263,7 +266,7 @@ public class GUI extends JFrame {
 		pnlItemList = new JPanel();
 		lblCurrentItems = new JLabel();
 		jScrollPane6 = new JScrollPane();
-		listLootingItems = new JList<>();
+		listLootingItems = new JList<>(itemModel);
 		btnClearCurrent2 = new JButton();
 		btnLootRemove = new JButton();
 		btnLootAdd = new JButton();
@@ -395,6 +398,7 @@ public class GUI extends JFrame {
 		btnClearCurrent.setText("Clear");
 		pnlMonsterList.add(btnClearCurrent);
 		btnClearCurrent.setBounds(230, 250, 80, 30);
+		btnClearCurrent.addActionListener(e -> clearTargets());
 
 		jpMain.add(pnlMonsterList);
 		pnlMonsterList.setBounds(390, 10, 320, 350);
@@ -696,6 +700,7 @@ public class GUI extends JFrame {
 		btnClearCurrent2.setText("Clear");
 		pnlItemList.add(btnClearCurrent2);
 		btnClearCurrent2.setBounds(230, 250, 80, 30);
+		btnClearCurrent2.addActionListener(e -> clearLootData());
 
 		pnlLoot.add(pnlItemList);
 		pnlItemList.setBounds(390, 10, 320, 350);
@@ -704,11 +709,13 @@ public class GUI extends JFrame {
 		btnLootRemove.setToolTipText("Remove an item from the Current Targets list");
 		pnlLoot.add(btnLootRemove);
 		btnLootRemove.setBounds(330, 210, 60, 40);
+		btnLootRemove.addActionListener(e -> removeLootData());
 
 		btnLootAdd.setText(">>");
 		btnLootAdd.setToolTipText("Add an item to the Current Targets list");
 		pnlLoot.add(btnLootAdd);
 		btnLootAdd.setBounds(329, 80, 60, 40);
+		btnLootAdd.addActionListener(e -> addLootData());
 
 		pnlMain.addTab("Looting", pnlLoot);
 
@@ -1007,6 +1014,8 @@ public class GUI extends JFrame {
 		this.setVisible(true);
 	}
 
+	
+	// BEGIN TARGET SELECTION
 
 	private void loadNPCs() {
 
@@ -1060,6 +1069,50 @@ public class GUI extends JFrame {
 
 		loadNPCs();
 	}
+	
+	private void clearTargets() {
+		currentModel.clear();
+		loadNPCs();
+	}
+	
+	// END Target Selection
+	
+	// BEGIN Loot Selection
+	
+	private void addLootData() {
+		String itemName = txtItemName.getText();
+		LootCondition condition = LootCondition.NONE;
+		if(rbLootNoted.isSelected()) {
+			condition = LootCondition.NOTED;
+		}else if(rbLootLowAlch.isSelected()) {
+			condition = LootCondition.LOW_ALCH;
+		}else if(rbLootHighAlch.isSelected()) {
+			condition = LootCondition.HIGH_ALCH;
+		}
+		
+		boolean replaceable = chkItemReplaceable.isSelected();
+		
+		LootedItem lootedItem = new LootedItem(itemName, condition, replaceable);
+		if(!modelContains(itemModel, lootedItem)) {
+			itemModel.addElement(lootedItem);
+		}
+		
+	}
+	
+	private void removeLootData() {
+		if(!listLootingItems.isSelectionEmpty()) {
+			LootedItem lItem = listLootingItems.getSelectedValue();
+			if(itemModel.contains(lItem)) {
+				itemModel.removeElement(lItem);
+			}
+		}
+	}
+	
+	private void clearLootData() {
+		itemModel.clear();
+	}
+	
+	// END Loot Selection
 
 	private <T> boolean modelContains(DefaultListModel<T> model, T clazz) {
 		for(int i = 0; i < model.size(); i++) {
