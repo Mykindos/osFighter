@@ -403,6 +403,7 @@ public class GUI extends JFrame {
 		btnRemove.setToolTipText("Remove an item from the Current Targets list");
 		jpMain.add(btnRemove);
 		btnRemove.setBounds(330, 210, 60, 40);
+		btnRemove.addActionListener(e -> removeTarget());
 
 		btnAdd.setText(">>");
 		btnAdd.setToolTipText("Add an item to the Current Targets list");
@@ -855,17 +856,7 @@ public class GUI extends JFrame {
 
 		jpScheduler.setLayout(null);
 
-		listTasks.setModel(new AbstractListModel<String>() {
-			String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 
-			public int getSize() {
-				return strings.length;
-			}
-
-			public String getElementAt(int i) {
-				return strings[i];
-			}
-		});
 		jScrollPane3.setViewportView(listTasks);
 
 		jpScheduler.add(jScrollPane3);
@@ -1019,37 +1010,57 @@ public class GUI extends JFrame {
 
 	private void loadNPCs() {
 
-			nearbyModel.clear();
+		nearbyModel.clear();
 
 
-	
-			instance.getNpcs().getAll().forEach(npc -> {
-				FighterNPC n = new FighterNPC(npc.getName(), npc.getLevel());
-				if(npc.isAttackable()) {
-					if(!modelContains(currentModel, n)) {
-						
-						if(!modelContains(nearbyModel, n)) {
-							nearbyModel.addElement(n);
-						}
+
+		instance.getNpcs().getAll().forEach(npc -> {
+			FighterNPC n = new FighterNPC(npc.getName(), npc.getLevel());
+			if(npc.isAttackable()) {
+				if(!modelContains(currentModel, n)) {
+
+					if(!modelContains(nearbyModel, n)) {
+						nearbyModel.addElement(n);
 					}
 				}
-			});
+			}
+		});
 
 
 	}
 
 
 	private void addTarget() {
-		if(!listNearbyTargets.isSelectionEmpty()) {
-			FighterNPC fNpc = listNearbyTargets.getSelectedValue();
+		if(txtTargetName.getText() != "") {
+			String[] npcData = txtTargetName.getText().split(",");
+			FighterNPC fNpc = new FighterNPC(npcData[0], Integer.valueOf(npcData[1].replaceAll(" ", "")));
 			if(!currentModel.contains(fNpc)) {
 				currentModel.addElement(fNpc);
+			}
+
+		}	else {
+			if(!listNearbyTargets.isSelectionEmpty()) {
+				FighterNPC fNpc = listNearbyTargets.getSelectedValue();
+				if(!currentModel.contains(fNpc)) {
+					currentModel.addElement(fNpc);
+				}
 			}
 		}
 
 		loadNPCs();
 	}
-	
+
+	private void removeTarget() {
+		if(!listCurrentTargets.isSelectionEmpty()) {
+			FighterNPC fNpc = listCurrentTargets.getSelectedValue();
+			if(currentModel.contains(fNpc)) {
+				currentModel.removeElement(fNpc);
+			}
+		}
+
+		loadNPCs();
+	}
+
 	private <T> boolean modelContains(DefaultListModel<T> model, T clazz) {
 		for(int i = 0; i < model.size(); i++) {
 			T x = model.get(i);
@@ -1057,7 +1068,7 @@ public class GUI extends JFrame {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
