@@ -9,7 +9,7 @@ public class AntiPattern extends ScriptState{
 
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
-		return UtilMath.randDouble(0, 10000) > 9995 && i.myPlayer().isAnimating()
+		return UtilMath.randDouble(0, 10000) > 9995 && i.myPlayer().getInteracting() != null
 				|| System.currentTimeMillis() > i.getSessionData().getLastAntiban() 
 				+ i.getSessionData().getAntibanGap();
 	}

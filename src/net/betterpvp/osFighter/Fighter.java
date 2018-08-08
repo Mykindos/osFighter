@@ -13,6 +13,7 @@ import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.gui.GUI;
 import net.betterpvp.osFighter.managers.Paint;
 import net.betterpvp.osFighter.states.AntiPattern;
+import net.betterpvp.osFighter.states.Fighting;
 import net.betterpvp.osFighter.states.ScriptState;
 
 
@@ -96,7 +97,7 @@ public class Fighter extends Script{
 		
 	
 		states.add(new AntiPattern());
-
+		states.add(new Fighting());
 
 		started = true;
 	}
