@@ -195,6 +195,7 @@ public class GUI extends JFrame {
 
 		nearbyModel = new DefaultListModel<FighterNPC>();
 		currentModel = new DefaultListModel<FighterNPC>();
+		itemModel = new DefaultListModel<LootedItem>();
 		bgLooting = new ButtonGroup();
 		lblLogo = new JLabel();
 		buttonStart = new JButton();
@@ -324,10 +325,13 @@ public class GUI extends JFrame {
 		btnLoad = new JButton();
 
 		getContentPane().setLayout(null);
+	
+
+		this.setMinimumSize(new Dimension(500, 610));
 		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 		try {
-			jLabel1.setIcon(new ImageIcon(new URL("http://betterpvp.net/osFighter/osFighter-header.png")));
+			lblLogo.setIcon(new ImageIcon(new URL("http://betterpvp.net/osFighter/osFighter-header.png")));
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -339,6 +343,13 @@ public class GUI extends JFrame {
 		buttonStart.setText("Start Script");
 		getContentPane().add(buttonStart);
 		buttonStart.setBounds(0, 510, 730, 60);
+		buttonStart.addActionListener(e -> {
+			
+			this.setVisible(false);
+			instance.start();
+		
+		
+		});
 
 		pnlMain.setBorder(BorderFactory.createEtchedBorder());
 
@@ -1040,11 +1051,12 @@ public class GUI extends JFrame {
 
 
 	private void addTarget() {
-		if(txtTargetName.getText() != "") {
+		if(!txtTargetName.getText().isEmpty()) {
 			String[] npcData = txtTargetName.getText().split(",");
 			FighterNPC fNpc = new FighterNPC(npcData[0], Integer.valueOf(npcData[1].replaceAll(" ", "")));
 			if(!currentModel.contains(fNpc)) {
 				currentModel.addElement(fNpc);
+				instance.getSessionData().getCurrentTargets().add(fNpc);
 			}
 
 		}	else {
@@ -1052,6 +1064,7 @@ public class GUI extends JFrame {
 				FighterNPC fNpc = listNearbyTargets.getSelectedValue();
 				if(!currentModel.contains(fNpc)) {
 					currentModel.addElement(fNpc);
+					instance.getSessionData().getCurrentTargets().add(fNpc);
 				}
 			}
 		}
@@ -1072,6 +1085,7 @@ public class GUI extends JFrame {
 	
 	private void clearTargets() {
 		currentModel.clear();
+		instance.getSessionData().getCurrentTargets().clear();
 		loadNPCs();
 	}
 	
@@ -1095,21 +1109,24 @@ public class GUI extends JFrame {
 		LootedItem lootedItem = new LootedItem(itemName, condition, replaceable);
 		if(!modelContains(itemModel, lootedItem)) {
 			itemModel.addElement(lootedItem);
+			instance.getSessionData().getLootableItems().add(lootedItem);
 		}
 		
 	}
 	
 	private void removeLootData() {
 		if(!listLootingItems.isSelectionEmpty()) {
-			LootedItem lItem = listLootingItems.getSelectedValue();
-			if(itemModel.contains(lItem)) {
-				itemModel.removeElement(lItem);
+			LootedItem lootedItem = listLootingItems.getSelectedValue();
+			if(itemModel.contains(lootedItem)) {
+				itemModel.removeElement(lootedItem);
+				instance.getSessionData().getLootableItems().remove(lootedItem);
 			}
 		}
 	}
 	
 	private void clearLootData() {
 		itemModel.clear();
+		instance.getSessionData().getLootableItems().clear();
 	}
 	
 	// END Loot Selection

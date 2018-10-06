@@ -52,6 +52,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 		i.getSkills().getExperienceTracker().start(Skill.STRENGTH);
 		i.getSkills().getExperienceTracker().start(Skill.DEFENCE);
 		i.getSkills().getExperienceTracker().start(Skill.RANGED);
+		i.getSkills().getExperienceTracker().start(Skill.MAGIC);
 
 		try {
 			addPaintObject(new PaintImage("Active Paint", 0, 342, ImageIO.read(new URL(url + "paint.png"))));

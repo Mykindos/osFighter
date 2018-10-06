@@ -12,12 +12,12 @@ import net.betterpvp.osFighter.antiban.AntiBanManager;
 import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.gui.GUI;
 import net.betterpvp.osFighter.managers.Paint;
-import net.betterpvp.osFighter.states.AntiPattern;
 import net.betterpvp.osFighter.states.Fighting;
+import net.betterpvp.osFighter.states.Looting;
 import net.betterpvp.osFighter.states.ScriptState;
 
 
-@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 0.1, logo = "http://betterpvp.net/osMiner/logo.png")
+@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 0.1, logo = "http://betterpvp.net/osFighter/osfighter_logo.png")
 public class Fighter extends Script{
 
 	public boolean started;
@@ -80,7 +80,7 @@ public class Fighter extends Script{
 
 	@Override
 	public int onLoop() throws InterruptedException {
-		if(started){
+		if(hasStarted()){
 
 			for(ScriptState s : states){
 				if(s.execute(this)) {
@@ -96,7 +96,8 @@ public class Fighter extends Script{
 
 		
 	
-		states.add(new AntiPattern());
+		//states.add(new AntiPattern());
+		states.add(new Looting());
 		states.add(new Fighting());
 
 		started = true;

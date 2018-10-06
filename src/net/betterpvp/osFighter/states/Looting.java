@@ -8,19 +8,29 @@ import net.betterpvp.osFighter.states.looting.LootCondition;
 import net.betterpvp.osFighter.states.looting.LootedItem;
 import net.betterpvp.osFighter.utilities.CustomSleep;
 import net.betterpvp.osFighter.utilities.UtilSleep;
+import net.betterpvp.osFighter.utilities.UtilTime;
 
 public class Looting extends ScriptState{
 
+	
+	private long lastExecute = System.currentTimeMillis() ;
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
-		return i.getGroundItems().getAll().stream().anyMatch(g -> {
-			if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
-			gA.getItemName().equalsIgnoreCase(g.getName()))) {
-				return true;
-			}
+		if(UtilTime.elapsed(lastExecute, 1000)) { // Performance
+			lastExecute = System.currentTimeMillis();
+			
+			return i.getGroundItems().getAll().stream().anyMatch(g -> {
+				if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
+				gA.getItemName().equalsIgnoreCase(g.getName()))) {
+					return true;
+				}
 
-			return false;
-		});
+				return false;
+			});
+		}
+		
+		
+		return false;
 	}
 
 	private LootCondition lc = null;

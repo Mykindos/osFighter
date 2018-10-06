@@ -280,6 +280,10 @@ public class SessionData {
 		return currentTargets;
 	}
 	
+	public void setCurrentTargets(List<FighterNPC> targets) {
+		this.currentTargets = targets;
+	}
+	
 	public void setBank(Bank b){
 		this.bank = b;
 	}
