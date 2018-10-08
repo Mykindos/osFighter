@@ -1128,15 +1128,24 @@ public class GUI extends JFrame {
 	
 	
 	public void addWithdrawData() {
-		
+		WithdrawData data = new WithdrawData(txtItemToWithdraw.getText(), (Integer) spinnerWithdrawAmount.getValue());
+		bankModel.addElement(data);
+		instance.getSessionData().getWithdrawData().add(data);
 	}
 	
 	public void removeWithdrawData() {
-		
+		if(!listWithdrawData.isSelectionEmpty()) {
+			WithdrawData data = listWithdrawData.getSelectedValue();
+			if(bankModel.contains(data)) {
+				bankModel.removeElement(data);
+				instance.getSessionData().getWithdrawData().remove(data);
+			}
+		}
 	}
 	
 	public void clearWithdrawData() {
-		
+		bankModel.clear();
+		instance.getSessionData().getWithdrawData().clear();
 	}
 	
 	// END Banking Setup

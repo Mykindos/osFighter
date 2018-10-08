@@ -21,4 +21,9 @@ public class WithdrawData {
 	public int getAmount() {
 		return amount;
 	}
+	
+	@Override
+	public String toString() {
+		return getItemName() + ", " + getAmount();
+	}
 }
