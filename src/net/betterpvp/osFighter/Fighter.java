@@ -12,6 +12,8 @@ import net.betterpvp.osFighter.antiban.AntiBanManager;
 import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.gui.GUI;
 import net.betterpvp.osFighter.managers.Paint;
+import net.betterpvp.osFighter.states.Banking;
+import net.betterpvp.osFighter.states.EatDrink;
 import net.betterpvp.osFighter.states.Fighting;
 import net.betterpvp.osFighter.states.Looting;
 import net.betterpvp.osFighter.states.ScriptState;
@@ -97,7 +99,9 @@ public class Fighter extends Script{
 		
 	
 		//states.add(new AntiPattern());
+		states.add(new EatDrink());
 		states.add(new Looting());
+		states.add(new Banking());
 		states.add(new Fighting());
 
 		started = true;

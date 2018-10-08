@@ -78,10 +78,6 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 			update();	
 			draw(g);
 		}
-		
-		
-
-
 
 	}
 

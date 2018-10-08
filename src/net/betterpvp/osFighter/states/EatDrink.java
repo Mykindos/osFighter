@@ -5,6 +5,7 @@ import org.osbot.rs07.api.ui.Skill;
 import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.data.Potions;
 import net.betterpvp.osFighter.data.SessionData;
+import net.betterpvp.osFighter.utilities.CustomSleep;
 import net.betterpvp.osFighter.utilities.UtilMath;
 
 public class EatDrink extends ScriptState{
@@ -78,6 +79,19 @@ public class EatDrink extends ScriptState{
 		SessionData data = i.getSessionData();
 		deviateBy = data.getHealthToEatBelow() 
 				+ UtilMath.randInt(data.getHealthDeviation() * -1,  data.getHealthDeviation());
+		
+		if(data.isEatingFood()) {
+			if(i.myPlayer().getHealthPercent() < (deviateBy == 0 ? data.getHealthToEatBelow() : deviateBy)) {
+				int healthPct = i.myPlayer().getHealthPercent();
+				if(i.getInventory().contains(data.getFoodToEat())) {
+					if(i.getInventory().interact("Eat", data.getFoodToEat())) {
+						new CustomSleep(() -> i.myPlayer().getHealthPercent() > healthPct, 2000).sleep();
+					}
+				}else {
+					// TODO Explore escape options / stopping script
+				}
+			}
+		}
 		
 	}
 

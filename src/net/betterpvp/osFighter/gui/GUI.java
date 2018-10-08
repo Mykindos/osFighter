@@ -7,7 +7,6 @@ import java.awt.Label;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -35,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 
 import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.data.FighterNPC;
+import net.betterpvp.osFighter.states.banking.WithdrawData;
 import net.betterpvp.osFighter.states.looting.LootCondition;
 import net.betterpvp.osFighter.states.looting.LootedItem;
 
@@ -49,7 +49,7 @@ public class GUI extends JFrame {
 	private JButton btnAdd;
 	private JButton btnAddBankItem;
 	private JButton btnAddTask1;
-	private JButton btnAddTask2;
+	private JButton btnRemoveTask;
 	private JButton btnClearBankList;
 	private JButton btnClearCurrent;
 	private JButton btnClearCurrent2;
@@ -88,7 +88,7 @@ public class GUI extends JFrame {
 	private JCheckBox jCheckBox1;
 	private JLabel jLabel1;
 	private JLabel jLabel2;
-	private JList<String> jList1;
+	private JList<WithdrawData> listWithdrawData;
 	private JScrollPane jScrollPane1;
 	private JScrollPane jScrollPane2;
 	private JScrollPane jScrollPane3;
@@ -96,7 +96,7 @@ public class GUI extends JFrame {
 	private JScrollPane jScrollPane5;
 	private JScrollPane jScrollPane6;
 	private JSpinner jSpinner1;
-	private JSpinner jSpinner2;
+	private JSpinner spinnerWithdrawAmount;
 	private JPanel jpAntiban;
 	private JPanel jpConfig;
 	private JPanel jpMain;
@@ -140,6 +140,7 @@ public class GUI extends JFrame {
 	private JLabel lblWithdrawList;
 	private DefaultListModel<FighterNPC> nearbyModel, currentModel;
 	private DefaultListModel<LootedItem> itemModel;
+	private DefaultListModel<WithdrawData> bankModel;
 	private JList<LootedItem> listLootingItems;
 	private JList<FighterNPC> listNearbyTargets;
 	private JList<FighterNPC> listCurrentTargets;
@@ -193,7 +194,9 @@ public class GUI extends JFrame {
 	@SuppressWarnings("unchecked")
 	private void initComponents() {
 
+		bankModel = new DefaultListModel<WithdrawData>();
 		nearbyModel = new DefaultListModel<FighterNPC>();
+		
 		currentModel = new DefaultListModel<FighterNPC>();
 		itemModel = new DefaultListModel<LootedItem>();
 		bgLooting = new ButtonGroup();
@@ -276,10 +279,10 @@ public class GUI extends JFrame {
 		pnlSubBanking = new JPanel();
 		chkDepositInventory = new JCheckBox();
 		lblBankWithdrawAmount = new JLabel();
-		jSpinner2 = new JSpinner();
+		spinnerWithdrawAmount = new JSpinner();
 		txtItemToWithdraw = new JTextField();
 		jScrollPane5 = new JScrollPane();
-		jList1 = new JList<>();
+		listWithdrawData = new JList<>(bankModel);
 		btnAddBankItem = new JButton();
 		btnClearBankList = new JButton();
 		btnRemoveSelectedBankItem = new JButton();
@@ -299,7 +302,7 @@ public class GUI extends JFrame {
 		jpScheduler = new JPanel();
 		jScrollPane3 = new JScrollPane();
 		listTasks = new JList<>();
-		btnAddTask2 = new JButton();
+		btnRemoveTask = new JButton();
 		lblTaskUntilLevel = new JLabel();
 		lblTaskTrain = new JLabel();
 		cmbTaskAttackStyle = new JComboBox<>();
@@ -750,25 +753,15 @@ public class GUI extends JFrame {
 		pnlSubBanking.add(lblBankWithdrawAmount);
 		lblBankWithdrawAmount.setBounds(20, 60, 80, 30);
 
-		jSpinner2.setFont(new Font("Tahoma", 1, 14)); // NOI18N
-		jSpinner2.setModel(new SpinnerNumberModel(1, 1, null, 1));
-		pnlSubBanking.add(jSpinner2);
-		jSpinner2.setBounds(100, 60, 50, 30);
+		spinnerWithdrawAmount.setFont(new Font("Tahoma", 1, 14)); // NOI18N
+		spinnerWithdrawAmount.setModel(new SpinnerNumberModel(1, 1, null, 1));
+		pnlSubBanking.add(spinnerWithdrawAmount);
+		spinnerWithdrawAmount.setBounds(100, 60, 50, 30);
 		pnlSubBanking.add(txtItemToWithdraw);
 		txtItemToWithdraw.setBounds(160, 60, 190, 30);
 
-		jList1.setModel(new AbstractListModel<String>() {
-			String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 
-			public int getSize() {
-				return strings.length;
-			}
-
-			public String getElementAt(int i) {
-				return strings[i];
-			}
-		});
-		jScrollPane5.setViewportView(jList1);
+		jScrollPane5.setViewportView(listWithdrawData);
 
 		pnlSubBanking.add(jScrollPane5);
 		jScrollPane5.setBounds(360, 40, 330, 230);
@@ -880,11 +873,11 @@ public class GUI extends JFrame {
 		jpScheduler.add(jScrollPane3);
 		jScrollPane3.setBounds(10, 10, 700, 160);
 
-		btnAddTask2.setFont(new Font("Tahoma", 1, 14)); // NOI18N
-		btnAddTask2.setText("Add Task");
+		btnRemoveTask.setFont(new Font("Tahoma", 1, 14)); // NOI18N
+		btnRemoveTask.setText("Remove Task");
 
-		jpScheduler.add(btnAddTask2);
-		btnAddTask2.setBounds(330, 270, 100, 30);
+		jpScheduler.add(btnRemoveTask);
+		btnRemoveTask.setBounds(330, 270, 100, 30);
 
 		lblTaskUntilLevel.setFont(new Font("Tahoma", 1, 14)); // NOI18N
 		lblTaskUntilLevel.setText("until level");
@@ -1130,6 +1123,42 @@ public class GUI extends JFrame {
 	}
 	
 	// END Loot Selection
+	
+	// START Banking Setup
+	
+	
+	public void addWithdrawData() {
+		
+	}
+	
+	public void removeWithdrawData() {
+		
+	}
+	
+	public void clearWithdrawData() {
+		
+	}
+	
+	// END Banking Setup
+	
+	// START Task Scheduling
+	
+	
+	public void addScheduledTask() {
+		
+	}
+	
+	public void removeScheduledTask() {
+		
+		
+	}
+	
+	public void clearScheduledTasks() {
+		
+	}
+	
+	
+	// END Task Scheduling
 
 	private <T> boolean modelContains(DefaultListModel<T> model, T clazz) {
 		for(int i = 0; i < model.size(); i++) {
