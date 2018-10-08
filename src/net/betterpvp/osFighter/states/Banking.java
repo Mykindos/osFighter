@@ -7,12 +7,15 @@ import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.utilities.CustomSleep;
 import net.betterpvp.osFighter.utilities.UtilEntity;
 import net.betterpvp.osFighter.utilities.UtilSleep;
+import net.betterpvp.osFighter.utilities.UtilWalking;
 
 public class Banking extends ScriptState{
 
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
-		return i.getSessionData().isBanking() && (i.getInventory().isFull()); // TODO create proper banking conditions
+		return i.getSessionData().isBanking() 
+				&& (i.getInventory().isFull() || i.getSessionData().shouldBankNow()); 
+		// TODO create proper banking conditions
 			
 	}
 
@@ -38,10 +41,12 @@ public class Banking extends ScriptState{
 			});
 
 		
+			data.setShouldBankNow(false);
 
 		} else {
 			if(!i.getSessionData().getBank().getArea().contains(i.myPlayer())){
-				i.getWalking().webWalk(i.getSessionData().getBank().getArea());
+				UtilWalking.webWalk(i.getSessionData().getBank().getArea(), null, true);
+				
 				return;
 			}
 			

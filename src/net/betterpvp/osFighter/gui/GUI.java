@@ -768,6 +768,7 @@ public class GUI extends JFrame {
 
 		btnAddBankItem.setFont(new Font("Tahoma", 0, 14)); // NOI18N
 		btnAddBankItem.setText("Add Item");
+		btnAddBankItem.addActionListener(e -> addWithdrawData());
 
 		pnlSubBanking.add(btnAddBankItem);
 		btnAddBankItem.setBounds(120, 110, 120, 40);
@@ -775,10 +776,12 @@ public class GUI extends JFrame {
 		btnClearBankList.setText("Clear");
 		pnlSubBanking.add(btnClearBankList);
 		btnClearBankList.setBounds(520, 270, 170, 23);
+		btnClearBankList.addActionListener(e -> clearWithdrawData());
 
 		btnRemoveSelectedBankItem.setText("Remove Selected");
 		pnlSubBanking.add(btnRemoveSelectedBankItem);
 		btnRemoveSelectedBankItem.setBounds(360, 270, 160, 23);
+		btnRemoveSelectedBankItem.addActionListener(e -> removeWithdrawData());
 
 		lblWithdrawList.setFont(new Font("Tahoma", 1, 14)); // NOI18N
 		lblWithdrawList.setHorizontalAlignment(SwingConstants.CENTER);

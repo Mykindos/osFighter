@@ -42,6 +42,7 @@ public class SessionData {
 	private boolean isBanking;
 	private boolean isDepositingInventory;
 	private List<WithdrawData> withdrawData;
+	private boolean shouldBankNow;
 	
 	//Prayer
 	private boolean usePrayer;
@@ -232,6 +233,8 @@ public class SessionData {
 	public void setUseSGS(boolean useSGS) {
 		this.useSGS = useSGS;
 	}
+	
+	
 
 	public int getUseGuthansBelow() {
 		return useGuthansBelow;
@@ -330,6 +333,14 @@ public class SessionData {
 		return antibanGap;
 	}
 	
+	
+	public void setShouldBankNow(boolean b) {
+		this.shouldBankNow = b;
+	}
+	
+	public boolean shouldBankNow() {
+		return shouldBankNow;
+	}
 
 	
 
