@@ -52,6 +52,7 @@ public class SessionData {
 	//Other Settings
 	private boolean isUsingCannon;
 	private boolean isSafeSpotting;
+	private String specWeapon;
 	
 	public SessionData(){
 		
@@ -340,6 +341,14 @@ public class SessionData {
 	
 	public boolean shouldBankNow() {
 		return shouldBankNow;
+	}
+	
+	public void setSpecWeapon(String spec) {
+		this.specWeapon = spec;
+	}
+	
+	public String getSpecWeapon() {
+		return specWeapon;
 	}
 
 	
