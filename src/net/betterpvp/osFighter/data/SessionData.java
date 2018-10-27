@@ -3,6 +3,7 @@ package net.betterpvp.osFighter.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.Script;
 
 import net.betterpvp.osFighter.states.banking.WithdrawData;
@@ -35,13 +36,13 @@ public class SessionData {
 	private boolean drinkAntifirePotions, drinkAntipoisonPotions, drinkAntivenomPotions, drinkAntidotePotions;
 	
 	//Looting
-	private List<LootedItem> lootableItems;
+	private List<LootedItem> lootableItems = new ArrayList<>();
 	
 	
 	//Banking
 	private boolean isBanking;
 	private boolean isDepositingInventory;
-	private List<WithdrawData> withdrawData;
+	private List<WithdrawData> withdrawData = new ArrayList<>();
 	private boolean shouldBankNow;
 	
 	//Prayer
@@ -52,7 +53,8 @@ public class SessionData {
 	//Other Settings
 	private boolean isUsingCannon;
 	private boolean isSafeSpotting;
-	private String specWeapon;
+	private Position safeSpot;
+	private SpecWeapon specWeapon;
 	
 	public SessionData(){
 		
@@ -277,7 +279,13 @@ public class SessionData {
 		this.eatBelowHealthDeviation = i;
 	}
 	
+	public Position getSafeSpot() {
+		return safeSpot;
+	}
 	
+	public void setSafeSpot(Position p) {
+		this.safeSpot = p;
+	}
 	
 	
 	public List<FighterNPC> getCurrentTargets(){
@@ -343,11 +351,11 @@ public class SessionData {
 		return shouldBankNow;
 	}
 	
-	public void setSpecWeapon(String spec) {
+	public void setSpecWeapon(SpecWeapon spec) {
 		this.specWeapon = spec;
 	}
 	
-	public String getSpecWeapon() {
+	public SpecWeapon getSpecWeapon() {
 		return specWeapon;
 	}
 

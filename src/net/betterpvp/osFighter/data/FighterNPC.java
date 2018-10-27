@@ -20,7 +20,7 @@ public class FighterNPC {
 
 	@Override
 	public String toString() {
-		return name + ", " + level;
+		return name + " (Level " + level + ")";
 	}
 
 	

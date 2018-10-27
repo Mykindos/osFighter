@@ -19,7 +19,7 @@ import net.betterpvp.osFighter.states.Looting;
 import net.betterpvp.osFighter.states.ScriptState;
 
 
-@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 0.1, logo = "http://betterpvp.net/osFighter/osfighter_logo.png")
+@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 0.1, logo = "http://mykindos.me/osFighter/osfighter_logo.png")
 public class Fighter extends Script{
 
 	public boolean started;

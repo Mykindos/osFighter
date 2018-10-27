@@ -12,24 +12,72 @@ import net.betterpvp.osFighter.utilities.UtilTime;
 
 public class Looting extends ScriptState{
 
-	
+
 	private long lastExecute = System.currentTimeMillis() ;
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
+		
+		if(i.getSessionData().getLootableItems().isEmpty()) {
+			return false;
+		}
+		
 		if(UtilTime.elapsed(lastExecute, 1000)) { // Performance
 			lastExecute = System.currentTimeMillis();
 			
-			return i.getGroundItems().getAll().stream().anyMatch(g -> {
+			GroundItem item = i.getGroundItems().closest(g -> {
+				if(i.getInventory().isFull()) {
+					for(LootedItem li : i.getSessionData().getLootableItems()) {
+						if(i.getInventory().contains(li.getItemName())) {
+							return true;
+						}
+					}
+					
+
+				}
+
+			
 				if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
-				gA.getItemName().equalsIgnoreCase(g.getName()))) {
+						gA.getItemName().equalsIgnoreCase(g.getName()))) {
+					i.log("Test1");
+					return true;
+				}
+				
+				return false;
+			});
+/*
+			return i.getGroundItems().getAll().stream().anyMatch(g -> {
+				i.log("Test2");
+				if(i.getInventory().isFull()) {
+					for(LootedItem li : i.getSessionData().getLootableItems()) {
+						if(i.getInventory().contains(li.getItemName())) {
+							return true;
+						}
+					}
+					
+
+				}
+
+				i.log("Test1");
+				if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
+						gA.getItemName().equalsIgnoreCase(g.getName()))) {
 					return true;
 				}
 
+
+
 				return false;
 			});
+			*/
+			
+			if(item != null) {
+				return true;
+			}
+			
+			return false;
 		}
-		
-		
+
+
 		return false;
 	}
 
@@ -40,6 +88,17 @@ public class Looting extends ScriptState{
 	public void run(Fighter i) throws InterruptedException {
 
 		lc = null;
+		if(i.getInventory().isFull()) {
+			for(LootedItem li : i.getSessionData().getLootableItems()) {
+				if(i.getInventory().contains(li.getItemName())) {
+					i.getInventory().interact(li.getItemName(), "Drop");
+					break;
+				}
+			}
+
+		}
+		
+		
 		GroundItem gi = i.getGroundItems().closest(g -> {
 
 			for(LootedItem li : i.getSessionData().getLootableItems()) {
@@ -54,7 +113,7 @@ public class Looting extends ScriptState{
 		});
 
 		if(gi != null) {
-			if(gi.interact("Pick-up")) {
+			if(gi.interact("Take")) {
 				new CustomSleep(() ->  gi == null || !gi.exists(), 5000).sleep();
 				UtilSleep.sleep(i, 200, 350);
 

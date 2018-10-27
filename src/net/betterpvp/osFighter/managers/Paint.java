@@ -46,7 +46,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 
 	public Paint(Fighter i){
 		this.i = i;
-		String url = "http://betterpvp.net/osFighter/";
+		String url = "http://mykindos.me/osFighter/";
 		i.getSkills().getExperienceTracker().start(Skill.HITPOINTS);
 		i.getSkills().getExperienceTracker().start(Skill.ATTACK);
 		i.getSkills().getExperienceTracker().start(Skill.STRENGTH);
@@ -55,7 +55,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 		i.getSkills().getExperienceTracker().start(Skill.MAGIC);
 
 		try {
-			addPaintObject(new PaintImage("Active Paint", 0, 342, ImageIO.read(new URL(url + "paint.png"))));
+			addPaintObject(new PaintImage("Active Paint", 0, 309, ImageIO.read(new URL(url + "paint.png"))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

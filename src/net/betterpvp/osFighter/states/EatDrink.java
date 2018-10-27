@@ -91,9 +91,10 @@ public class EatDrink extends ScriptState{
 	@Override
 	public void run(Fighter i) throws InterruptedException {
 		SessionData data = i.getSessionData();
+		if(data.getHealthDeviation() != 0) {
 		deviateBy = data.getHealthToEatBelow() 
 				+ UtilMath.randInt(data.getHealthDeviation() * -1,  data.getHealthDeviation());
-
+		}
 
 		if(data.isEatingFood()) {
 			if(i.getSkills().getDynamic(Skill.HITPOINTS) < (deviateBy == 0 ? data.getHealthToEatBelow() : deviateBy)) {
