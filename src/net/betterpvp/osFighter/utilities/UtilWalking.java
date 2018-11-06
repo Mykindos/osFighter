@@ -1,5 +1,7 @@
 package net.betterpvp.osFighter.utilities;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
@@ -10,6 +12,7 @@ import org.osbot.rs07.event.webwalk.PathPreferenceProfile;
 import org.osbot.rs07.utility.Condition;
 
 import net.betterpvp.osFighter.Fighter;
+import net.betterpvp.osFighter.data.Bank;
 
 public class UtilWalking {
 
@@ -49,6 +52,27 @@ public class UtilWalking {
 		e.execute();
 
 		return e.hasFinished();
+	}
+	
+	public static boolean webWalkBank(Position myPosition) throws InterruptedException {
+		return webWalk(getClosestBank(myPosition), null, true);
+	}
+	
+	public static Area getClosestBank(Position myPosition) throws InterruptedException {
+		List<Area> banks = Arrays.asList(Bank.getBankArea());
+		banks.sort(new Comparator<Area>() {
+
+			@Override
+			public int compare(Area a, Area b) {
+				return myPosition.distance(a.getRandomPosition()) - myPosition.distance(b.getRandomPosition());
+			}
+			
+		});
+	
+
+
+
+		return banks.get(0);
 	}
 
 

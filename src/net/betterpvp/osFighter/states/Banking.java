@@ -1,5 +1,6 @@
 package net.betterpvp.osFighter.states;
 
+import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.model.Entity;
 
 import net.betterpvp.osFighter.Fighter;
@@ -16,7 +17,7 @@ public class Banking extends ScriptState{
 		return i.getSessionData().isBanking() 
 				&& (i.getInventory().isFull() || i.getSessionData().shouldBankNow()); 
 		// TODO create proper banking conditions
-			
+
 	}
 
 	@Override
@@ -28,8 +29,8 @@ public class Banking extends ScriptState{
 				i.getBank().depositAll();
 				new CustomSleep(() -> i.getInventory().isEmpty(), 2000).sleep();
 			}
-			
-			
+
+
 			data.getWithdrawData().forEach(w -> {
 				if(i.getBank().contains(w.getItemName())) {
 					if(i.getBank().withdraw(w.getItemName(), w.getAmount())) {
@@ -40,27 +41,33 @@ public class Banking extends ScriptState{
 				}
 			});
 
-		
+
 			data.setShouldBankNow(false);
 
 		} else {
-			if(!i.getSessionData().getBank().getArea().contains(i.myPlayer())){
-				UtilWalking.webWalk(i.getSessionData().getBank().getArea(), null, true);
-				
+			Area closestBank = UtilWalking.getClosestBank(i.myPosition());
+			if(closestBank == null) {
+				i.log("null bank");
 				return;
 			}
-			
-			
-			if(i.getDepositBox().isOpen()) i.getDepositBox().close();
+			if(closestBank.contains(i.myPlayer())) {
 
 
-			// Finds closest bank, NPC OR RS2Object
-			Entity bank = UtilEntity.getEntity(i, "Bank");
-			if(bank != null){
-				if(bank.interact("Bank")){
-					new CustomSleep(() -> i.getBank().isOpen(), 3000).sleep();
-					
+				if(i.getDepositBox().isOpen()) i.getDepositBox().close();
+
+
+				// Finds closest bank, NPC OR RS2Object
+				Entity bank = UtilEntity.getEntity(i, "Bank");
+				if(bank != null){
+					if(bank.interact("Bank")){
+						new CustomSleep(() -> i.getBank().isOpen(), 3000).sleep();
+
+					}
 				}
+			}else {
+				i.getWalking().webWalk(closestBank);
+				
+				UtilSleep.sleep(i, 200, 400);
 			}
 
 

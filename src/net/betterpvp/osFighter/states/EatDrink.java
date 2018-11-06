@@ -16,7 +16,7 @@ public class EatDrink extends ScriptState{
 
 	private int deviateBy = 0;
 
-	private ContainsNameFilter<Item> prayerPots = new ContainsNameFilter<Item>("prayer", "restore");
+
 
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
@@ -43,11 +43,7 @@ public class EatDrink extends ScriptState{
 				}
 			}
 
-			if(data.isUsePrayer()) {
-				if(i.getSkills().getDynamic(Skill.PRAYER) < data.getDrinkBelowPrayer()) {
-					return true;
-				}
-			}
+
 
 			if(data.isDrinkAttackPotions()) {
 				checkStat(i, Skill.ATTACK, Potions.ATTACK);
@@ -106,7 +102,8 @@ public class EatDrink extends ScriptState{
 				}else {
 					data.setShouldBankNow(true);
 					if(data.isBanking()) {
-						UtilWalking.webWalk(data.getBank().getArea(), null, true);
+						i.getWalking().webWalk(UtilWalking.getClosestBank(i.myPosition()));
+						
 					}else {
 						if(i.getInventory().contains("Teleport")) {
 							Position p = i.myPosition();
@@ -127,23 +124,7 @@ public class EatDrink extends ScriptState{
 		}
 
 		if(data.isDrinkPotions()) {
-			if(data.isUsePrayer()) {
-				if(data.isBankWhenNoPrayerSupplies()) {
-					// Bank if we have no supplies to restore prayer
-					if(!i.getInventory().contains(prayerPots)) {
-						i.getSessionData().setShouldBankNow(true);
-						return;
-					}
-				}
 
-				int points = i.getSkills().getDynamic(Skill.PRAYER);
-				if(points < data.getDrinkBelowPrayer()) {
-
-					if(i.getInventory().interact("Drink", prayerPots)) {
-						new CustomSleep(() -> i.getSkills().getDynamic(Skill.PRAYER) > points, 5000).sleep();
-					}
-				}
-			}
 		}
 
 	}

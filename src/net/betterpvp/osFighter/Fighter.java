@@ -5,18 +5,16 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import net.betterpvp.osFighter.states.*;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
 import net.betterpvp.osFighter.antiban.AntiBanManager;
 import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.gui.GUI;
+import net.betterpvp.osFighter.managers.KeyListener;
+import net.betterpvp.osFighter.managers.MouseListener;
 import net.betterpvp.osFighter.managers.Paint;
-import net.betterpvp.osFighter.states.Banking;
-import net.betterpvp.osFighter.states.EatDrink;
-import net.betterpvp.osFighter.states.Fighting;
-import net.betterpvp.osFighter.states.Looting;
-import net.betterpvp.osFighter.states.ScriptState;
 
 
 @ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 0.1, logo = "http://mykindos.me/osFighter/osfighter_logo.png")
@@ -27,7 +25,7 @@ public class Fighter extends Script{
 	public Paint listener;
 	private List<ScriptState> states = new ArrayList<>();
 	private GUI gui;
-
+	boolean definingArea;
 
 	@Override
 	public void onStart(){
@@ -40,6 +38,8 @@ public class Fighter extends Script{
 	
 
 		listener = new Paint(this);
+		getBot().addKeyListener(new KeyListener(this));
+		getBot().addMouseListener(new MouseListener(this));
 		getBot().addMouseListener(listener);
 		getBot().addPainter(listener);
 		getBot().addMessageListener(listener);
@@ -100,11 +100,14 @@ public class Fighter extends Script{
 	
 		//states.add(new AntiPattern());
 		states.add(new EatDrink());
+
 		states.add(new Looting());
 		states.add(new Banking());
+		states.add(new Prayer());
 		states.add(new Fighting());
 
 		started = true;
+		definingArea = false;
 	}
 
 	public boolean hasStarted(){
@@ -205,5 +208,12 @@ public class Fighter extends Script{
 		
 	}
 
+	public void setDefiningArea(boolean b) {
+		this.definingArea = b;
+	}
+	
+	public boolean isDefiningArea() {
+		return definingArea;
+	}
 
 }

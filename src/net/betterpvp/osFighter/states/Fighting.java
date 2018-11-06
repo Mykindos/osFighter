@@ -10,6 +10,7 @@ import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.managers.special.SpecialFactory;
 import net.betterpvp.osFighter.utilities.CustomSleep;
 import net.betterpvp.osFighter.utilities.UtilSleep;
+import org.osbot.rs07.event.WalkingEvent;
 
 @SuppressWarnings("unchecked")
 public class Fighting extends ScriptState{
@@ -28,10 +29,39 @@ public class Fighting extends ScriptState{
 	public void run(Fighter i) throws InterruptedException {
 		SessionData data = i.getSessionData();
 
+		if(data.getCombatAreaPositions().size() == 0 && data.getStartPosition().distance(i.myPosition()) > 30) {
+			i.getWalking().webWalk(data.getStartPosition());
+			return;
+		}else {
+			if(data.getCombatAreaPositions().size() == 1) {
+				if(i.myPosition().distance(data.getCombatAreaPositions().get(0)) > 30) {
+					i.getWalking().webWalk(data.getCombatAreaPositions().get(0));
+				}
+			}else {
+				if(!data.getCombatArea().contains(i.myPlayer())) {
+					i.getWalking().webWalk(data.getCombatArea());
+				}
+			}
 
-		if(i.myPlayer().isUnderAttack()) {
+		}
+
+
+		if(i.myPlayer().isUnderAttack() ) {
 			// Maybe add a hover option when target is low health
-			
+
+			if(data.isSafeSpotting()) {
+				if (i.myPosition().getX() != data.getSafeSpot().getX() || i.myPosition().getY() != data.getSafeSpot().getY()) {
+					WalkingEvent ev = new WalkingEvent(data.getSafeSpot());
+					ev.setMinDistanceThreshold(0);
+					ev.setMiniMapDistanceThreshold(0);
+
+					i.execute(ev);
+					//i.log(i.myPosition().getX() + " vs " + data.getStartTile().getX() + " - " + i.myPosition().getY() + " vs " + data.getStartTile().getY());
+					return;
+
+				}
+			}
+
 			if(data.isSafeSpotting()) {
 				if(i.myPosition() != data.getSafeSpot()) {
 					// TODO Move to safe spot
@@ -55,7 +85,7 @@ public class Fighting extends ScriptState{
 				if(!skip) {
 					if(i.getEquipment().contains(data.getSpecWeapon().getItemName())) {
 
-						
+
 						if(!i.getCombat().isSpecialActivated()) {
 							i.getCombat().toggleSpecialAttack(true);
 							new CustomSleep(() -> i.getCombat().isSpecialActivated(), 2000).sleep();
@@ -101,10 +131,25 @@ public class Fighting extends ScriptState{
 		});
 
 		if(npc != null) {
+			UtilSleep.sleep(i, 100, 250);
 			if(npc.interact("Attack")) {
 				new CustomSleep(() -> (i.myPlayer().getInteracting() != null && i.myPlayer().isUnderAttack()) 
-						|| (npc.isUnderAttack() && npc.getInteracting() != null && npc.getInteracting() != i.myPlayer()), 5000).sleep();
+						|| (npc.isUnderAttack() && npc.getInteracting() != null 
+						&& npc.getInteracting() == i.myPlayer() && i.myPlayer().isUnderAttack()), 5000).sleep();
 				UtilSleep.sleep(i, 250, 500);
+
+				if(data.isSafeSpotting()) {
+					if (i.myPosition().getX() != data.getSafeSpot().getX() || i.myPosition().getY() != data.getSafeSpot().getY()) {
+						WalkingEvent ev = new WalkingEvent(data.getSafeSpot());
+						ev.setMinDistanceThreshold(0);
+						ev.setMiniMapDistanceThreshold(0);
+
+						i.execute(ev);
+						//i.log(i.myPosition().getX() + " vs " + data.getStartTile().getX() + " - " + i.myPosition().getY() + " vs " + data.getStartTile().getY());
+						return;
+
+					}
+				}
 			}
 		}
 
@@ -149,7 +194,7 @@ public class Fighting extends ScriptState{
 		}
 	}
 
-	
+
 	private void swapGear(Fighter i) {
 		SessionData data = i.getSessionData();
 

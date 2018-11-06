@@ -3,6 +3,7 @@ package net.betterpvp.osFighter.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.Script;
 
@@ -49,20 +50,44 @@ public class SessionData {
 	private boolean usePrayer;
 	private int drinkBelowPrayer;
 	private boolean bankWhenNoPrayerSupplies;
+	private Prayers offensivePrayer;
+	private Prayers defensivePrayer;
+	private Prayers utilityPrayer;
+	private Prayers healingPrayer;
+	private Prayers protectionPrayer;
 	
 	//Other Settings
 	private boolean isUsingCannon;
 	private boolean isSafeSpotting;
 	private Position safeSpot;
 	private SpecWeapon specWeapon;
+	private Position startPosition;
+	
+	private Area combatArea = new Area(0,0,0,0);
+	private List<Position> combatAreaPositions = new ArrayList<>();
 	
 	public SessionData(){
-		
+	
+		combatArea.getPositions().clear();
 	}
+	
+	public Area getCombatArea() {
+		return combatArea;
+	}
+	
+	public List<Position> getCombatAreaPositions(){
+		return combatAreaPositions;
+	}
+	
+	public void setCombatArea(Area a) {
+		combatArea = a;
+	}
+	
 	
 	public boolean isUsingCannon() {
 		return isUsingCannon;
 	}
+
 
 	public void setUsingCannon(boolean isUsingCannon) {
 		this.isUsingCannon = isUsingCannon;
@@ -100,6 +125,13 @@ public class SessionData {
 		this.bankWhenNoPrayerSupplies = bankWhenNoPrayerSupplies;
 	}
 
+	public void setStartPosition(Position p) {
+		this.startPosition = p;
+	}
+	
+	public Position getStartPosition() {
+		return startPosition;
+	}
 	
 	public boolean isDepositingInventory() {
 		return isDepositingInventory;
@@ -359,6 +391,44 @@ public class SessionData {
 		return specWeapon;
 	}
 
-	
 
+	public Prayers getOffensivePrayer() {
+		return offensivePrayer;
+	}
+
+	public void setOffensivePrayer(Prayers offensivePrayer) {
+		this.offensivePrayer = offensivePrayer;
+	}
+
+	public Prayers getDefensivePrayer() {
+		return defensivePrayer;
+	}
+
+	public void setDefensivePrayer(Prayers defensivePrayer) {
+		this.defensivePrayer = defensivePrayer;
+	}
+
+	public Prayers getUtilityPrayer() {
+		return utilityPrayer;
+	}
+
+	public void setUtilityPrayer(Prayers utilityPrayer) {
+		this.utilityPrayer = utilityPrayer;
+	}
+
+	public Prayers getHealingPrayer() {
+		return healingPrayer;
+	}
+
+	public void setHealingPrayer(Prayers healingPrayer) {
+		this.healingPrayer = healingPrayer;
+	}
+
+	public Prayers getProtectionPrayer() {
+		return protectionPrayer;
+	}
+
+	public void setProtectionPrayer(Prayers protectionPrayer) {
+		this.protectionPrayer = protectionPrayer;
+	}
 }

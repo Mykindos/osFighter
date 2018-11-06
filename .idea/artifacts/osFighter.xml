@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="osFighter">
+    <output-path>$USER_HOME$/OSBot/Scripts</output-path>
+    <root id="archive" name="osFighter.jar">
+      <element id="module-output" name="osFighter" />
+    </root>
+  </artifact>
+</component>

@@ -17,35 +17,41 @@ public class Looting extends ScriptState{
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
-		
+
 		if(i.getSessionData().getLootableItems().isEmpty()) {
 			return false;
 		}
-		
+
 		if(UtilTime.elapsed(lastExecute, 1000)) { // Performance
 			lastExecute = System.currentTimeMillis();
-			
+
 			GroundItem item = i.getGroundItems().closest(g -> {
-				if(i.getInventory().isFull()) {
-					for(LootedItem li : i.getSessionData().getLootableItems()) {
-						if(i.getInventory().contains(li.getItemName())) {
-							return true;
-						}
+				if(i.getMap().canReach(g)) {
+					if(i.getSessionData().getCombatAreaPositions().size() > 0 && !i.getSessionData().getCombatArea().contains(g)) {
+						return false;
 					}
-					
+					if(i.getInventory().isFull()) {
+						for(LootedItem li : i.getSessionData().getLootableItems()) {
+							if(i.getInventory().contains(li.getItemName()) && li.isReplaceable()) {
+								return true;
+							}
+						}
 
+						return false;
+
+					}
+
+
+					if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
+					gA.getItemName().equalsIgnoreCase(g.getName()))) {
+						
+						return true;
+					}
 				}
 
-			
-				if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
-						gA.getItemName().equalsIgnoreCase(g.getName()))) {
-					i.log("Test1");
-					return true;
-				}
-				
 				return false;
 			});
-/*
+			/*
 			return i.getGroundItems().getAll().stream().anyMatch(g -> {
 				i.log("Test2");
 				if(i.getInventory().isFull()) {
@@ -54,7 +60,7 @@ public class Looting extends ScriptState{
 							return true;
 						}
 					}
-					
+
 
 				}
 
@@ -68,12 +74,12 @@ public class Looting extends ScriptState{
 
 				return false;
 			});
-			*/
-			
+			 */
+
 			if(item != null) {
 				return true;
 			}
-			
+
 			return false;
 		}
 
@@ -97,8 +103,8 @@ public class Looting extends ScriptState{
 			}
 
 		}
-		
-		
+
+
 		GroundItem gi = i.getGroundItems().closest(g -> {
 
 			for(LootedItem li : i.getSessionData().getLootableItems()) {

@@ -2,6 +2,7 @@ package net.betterpvp.osFighter.managers;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
@@ -10,12 +11,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
+import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.Message;
 import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.canvas.paint.Painter;
@@ -24,8 +29,11 @@ import org.osbot.rs07.listener.MessageListener;
 
 import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.managers.paint.PaintObject;
+import net.betterpvp.osFighter.managers.paint.SkillExperience;
+import net.betterpvp.osFighter.managers.paint.objects.Label;
 import net.betterpvp.osFighter.managers.paint.objects.MousePathPoint;
 import net.betterpvp.osFighter.managers.paint.objects.PaintImage;
+import net.betterpvp.osFighter.managers.paint.objects.UpdatingLabel;
 
 
 
@@ -34,7 +42,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 	private Fighter i;
 	public int mined = 0;
 	private Point pos;
-	
+
 	private List<PaintObject> po = new ArrayList<>();
 	private List<PaintObject> statLabels = new ArrayList<>();
 	private int mX, mY;
@@ -43,6 +51,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 	private Color cursorColor = Color.CYAN;
 	private AffineTransform oldTransform;
 	private LinkedList<MousePathPoint> mousePath = new LinkedList<>();
+	private List<SkillExperience> expTrack = new ArrayList<>();
 
 	public Paint(Fighter i){
 		this.i = i;
@@ -54,7 +63,15 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 		i.getSkills().getExperienceTracker().start(Skill.RANGED);
 		i.getSkills().getExperienceTracker().start(Skill.MAGIC);
 
+
+
 		try {
+			expTrack.add(new SkillExperience(i, Skill.HITPOINTS, ImageIO.read(new URL(url + "Hitpoints.png"))));
+			expTrack.add(new SkillExperience(i, Skill.ATTACK, ImageIO.read(new URL(url + "Attack.png"))));
+			expTrack.add(new SkillExperience(i, Skill.STRENGTH, ImageIO.read(new URL(url + "Strength.png"))));
+			expTrack.add(new SkillExperience(i, Skill.DEFENCE, ImageIO.read(new URL(url + "Defence.png"))));
+			expTrack.add(new SkillExperience(i, Skill.RANGED, ImageIO.read(new URL(url + "Ranged.png"))));
+			expTrack.add(new SkillExperience(i, Skill.MAGIC, ImageIO.read(new URL(url + "Magic.png"))));
 			addPaintObject(new PaintImage("Active Paint", 0, 309, ImageIO.read(new URL(url + "paint.png"))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -72,24 +89,85 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 	@Override
 	public void onPaint(Graphics2D g) {
 
-		if(i.hasStarted()){
-		
-			drawMouse(i, g);
-			update();	
-			draw(g);
+
+
+		drawMouse(i, g);
+		update();	
+		draw(g);
+
+		if(i.isDefiningArea() || (!i.hasStarted() && i.getSessionData().getCombatAreaPositions().size() > 0)) {
+
+			g.setColor(Color.RED);
+			
+				for(Position p : i.getSessionData().getCombatArea().getPositions()) {
+					g.drawPolygon(p.getPolygon(i.getBot()));
+				}
+				g.setColor(Color.GREEN);
+				if(i.getSessionData().getCombatAreaPositions().size() <= 4) {
+					for(Position p : i.getSessionData().getCombatAreaPositions()) {
+						g.drawPolygon(p.getPolygon(i.getBot()));
+					}
+				}
+			
+
+			//g.setColor(Color.GREEN);
+			//g.drawPolygon(i.getSessionData().getCombatArea().getPolygon());
+
+
 		}
+
+
 
 	}
 
 	public void draw(Graphics2D g){
-		for(PaintObject p : po){
-			if(p.isEnabled()){
-				p.draw(g);
+		if(paintEnabled) {
+			for(PaintObject p : po){
+				if(p.isEnabled()){
+					p.draw(g);
+				}
+			}
+
+
+			expTrack.sort(new Comparator<SkillExperience>() {
+
+				@Override
+				public int compare(SkillExperience a, SkillExperience b) {
+					return b.getGainedExp() - a.getGainedExp();
+				}
+
+			});
+
+			int x = 9;
+			int y = 345;
+			for(SkillExperience e : expTrack) {
+				if(e.getGainedExp() <= 0) continue;
+				if(x >= 260) {
+					x = 9;
+					y += 42;
+				}
+
+				g.drawImage(e.getResource(), x, y, null);
+				Font f1 = new Font("Calibri", Font.BOLD, 12);
+				g.setFont(f1);
+				g.setColor(Color.black);
+
+				g.drawString("TTL: ", x + 42, y + 10);
+				g.drawString("EXP / H: ", x + 42, y + 24);
+				g.drawString("Total: ", x + 42, y + 38);
+
+				Font f2 = new Font("Calibri", Font.PLAIN, 12);
+				g.setFont(f2);
+				g.drawString(totalTime((int) i.getExperienceTracker().getTimeToLevel(e.getSkill())), x + 66, y + 10);
+				g.drawString(NumberFormat.getNumberInstance(Locale.US).format(
+						i.getExperienceTracker().getGainedXPPerHour(e.getSkill())), x + 87, y + 24);
+				g.drawString(NumberFormat.getNumberInstance(Locale.US).format(
+						e.getGainedExp()) + " (" + i.getExperienceTracker().getGainedLevels(e.getSkill()) + ")", x + 75, y + 38);
+
+				x+=250;
+
 			}
 		}
-
-
-
 
 	}
 
@@ -136,21 +214,30 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 		+ (s < 10 ? "0" + s : s);
 	}
 
-	
+
 
 
 	public void loadCommonLabels(){
-	
-	
+		addPaintObject(new Label("Hotkeys", 5, 10, "Hotkeys"));
+		addPaintObject(new Label("F1", 5, 22, "F1: Enable Area Selection"));
+		addPaintObject(new Label("F2", 5, 34, "F2: Disable Area Selection"));
+		addPaintObject(new Label("F3", 5, 46, "F3: Set Safe Spot"));
+		addPaintObject(new UpdatingLabel("TimeRunning", 335, 338){
+			@Override
+			public void update(Paint p){
+				
+				setText("Time Ran: " + totalTime((int) i.getSkills().getExperienceTracker().getElapsed(Skill.HITPOINTS)));
+			}
+		});
 	}
-	
+
 	private void drawMouse(Fighter instance, Graphics2D g){
 		oldTransform = g.getTransform();
 		mX = instance.getMouse().getPosition().x;
 		mY = instance.getMouse().getPosition().y;
-		
+
 		g.setColor(Color.CYAN);
-		
+
 		g.drawRect(mX -1, mY + 20, 1, 25);
 		g.drawRect(mX -1, mY - 45, 1, 25);
 		g.drawRect(mX + 20, mY -1, 25, 1);
@@ -172,7 +259,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 				g.drawLine(a.x, a.y, lastPoint.x, lastPoint.y);
 			}
 			lastPoint = a;
-				}
+		}
 
 		if (mX != -1) {
 			g.setStroke(cursorStroke);
@@ -185,35 +272,41 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 			g.draw(new Arc2D.Double(mX-12, mY-12, 24, 24, 330, 60, Arc2D.OPEN));
 			g.draw(new Arc2D.Double(mX-12, mY-12, 24, 24, 151, 60, Arc2D.OPEN));
 
-		        g.setTransform(oldTransform);
+			g.setTransform(oldTransform);
 		}
 	}
 
 
+	private boolean paintEnabled = true;
 
 	@Override
 	public void checkMouseEvent(MouseEvent e) {
-		
+
 		if(getPaintObject("Active Paint").getRectangle().contains(e.getPoint())){
-		
+
 			if(getPaintObject("Active Paint").isEnabled()){
 				getPaintObject("Active Paint").setEnabled(false);
 				for(PaintObject p : statLabels){
 					p.setEnabled(false);
+
 				}
+
+				paintEnabled = false;
 			}else{
 				getPaintObject("Active Paint").setEnabled(true);
 				for(PaintObject p : statLabels){
 					p.setEnabled(true);
-					
+
 				}
+
+				paintEnabled = true;
 			}
 			e.consume();
 
 
 		}
-		
-		
+
+
 	}
 
 

@@ -62,5 +62,15 @@ public enum Bank {
 	public static Bank getBank(String name){
 		return Arrays.asList(values()).stream().filter(b -> b.getName().equalsIgnoreCase(name)).findFirst().get();
 	}
+	
+	public static Area[] getBankArea() {
+		Area[] areas = new Area[values().length];
+		
+		for(int i = 0; i < values().length; i++) {
+			areas[i] = values()[i].getArea();
+		}
+		
+		return areas;
+	}
 
 }
