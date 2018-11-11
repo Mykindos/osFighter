@@ -45,6 +45,8 @@ public class Banking extends ScriptState{
 			data.setShouldBankNow(false);
 
 		} else {
+
+			i.getPrayer().deactivateAll();
 			Area closestBank = UtilWalking.getClosestBank(i.myPosition());
 			if(closestBank == null) {
 				i.log("null bank");
@@ -65,7 +67,8 @@ public class Banking extends ScriptState{
 					}
 				}
 			}else {
-				i.getWalking().webWalk(closestBank);
+				UtilWalking.webWalk(i, closestBank, null, true);
+
 				
 				UtilSleep.sleep(i, 200, 400);
 			}

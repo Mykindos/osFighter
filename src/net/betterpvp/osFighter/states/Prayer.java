@@ -19,12 +19,17 @@ public class Prayer extends ScriptState {
         SessionData data = i.getSessionData();
 
         if (data.isUsePrayer()) {
-            if (i.getSkills().getDynamic(Skill.PRAYER) < data.getDrinkBelowPrayer()) {
+            if((data.getCombatAreaPositions().size() > 0 && data.getCombatArea().contains(i.myPosition()))
+                    || (data.getStartPosition().distance(i.myPlayer()) < 30 && data.getCombatAreaPositions().size() == 0)) {
+
+
+                if (i.getSkills().getDynamic(Skill.PRAYER) < data.getDrinkBelowPrayer()) {
+                if(!i.getInventory().contains(prayerPots) && i.getSkills().getDynamic(Skill.PRAYER) == 0
+                        && !data.isBankWhenNoPrayerSupplies()){
+                    return false;
+                }
                 return true;
             }
-
-            if((data.getCombatAreaPositions().size() > 0 && !data.getCombatArea().contains(i.myPosition()))
-            || (data.getStartPosition().distance(i.myPlayer()) < 30 && data.getCombatAreaPositions().size() == 0)) {
 
 
             Prayers offensivePrayer = data.getOffensivePrayer();
@@ -66,19 +71,29 @@ public class Prayer extends ScriptState {
         int points = i.getSkills().getDynamic(Skill.PRAYER);
         if (points < data.getDrinkBelowPrayer()) {
 
-            if (data.isBankWhenNoPrayerSupplies()) {
-                // Bank if we have no supplies to restore prayer
-                if (!i.getInventory().contains(prayerPots)) {
-                    i.getSessionData().setShouldBankNow(true);
-                    i.getPrayer().deactivateAll();
-                    return;
+            if(data.isBanking()) {
+                if (data.isBankWhenNoPrayerSupplies()) {
+                    // Bank if we have no supplies to restore prayer
+                    if (!i.getInventory().contains(prayerPots)) {
+                        i.getSessionData().setShouldBankNow(true);
+                        i.getPrayer().deactivateAll();
+                        return;
+                    }
                 }
             }
 
 
-            if (i.getInventory().interact("Drink", prayerPots)) {
-                new CustomSleep(() -> i.getSkills().getDynamic(Skill.PRAYER) > points, 5000).sleep();
-                UtilSleep.sleep(i, 100, 250);
+            if(i.getInventory().contains(prayerPots)) {
+                if(i.getBank().isOpen()){
+                    i.getBank().close();
+                    new CustomSleep(() -> !i.getBank().isOpen(), 1000).sleep();
+                }
+                if (i.getInventory().interact("Drink", prayerPots)) {
+                    new CustomSleep(() -> i.getSkills().getDynamic(Skill.PRAYER) > points, 5000).sleep();
+                    UtilSleep.sleep(i, 100, 250);
+                }
+            }else{
+                return;
             }
 
 

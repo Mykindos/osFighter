@@ -31,11 +31,20 @@ public class Looting extends ScriptState{
 						return false;
 					}
 					if(i.getInventory().isFull()) {
-						for(LootedItem li : i.getSessionData().getLootableItems()) {
-							if(i.getInventory().contains(li.getItemName()) && li.isReplaceable()) {
-								return true;
+						if(i.getSessionData().getLootableItems().stream().anyMatch(gA ->
+								gA.getItemName().equalsIgnoreCase(g.getName()))) {
+							for (LootedItem li : i.getSessionData().getLootableItems()) {
+
+								if (i.getInventory().contains(li.getItemName()) && li.isReplaceable()) {
+									if (!li.getItemName().equalsIgnoreCase(g.getName())) { // Stop dropping / picking up same item
+
+										return true;
+									}
+								}
+
 							}
 						}
+
 
 						return false;
 
@@ -51,30 +60,7 @@ public class Looting extends ScriptState{
 
 				return false;
 			});
-			/*
-			return i.getGroundItems().getAll().stream().anyMatch(g -> {
-				i.log("Test2");
-				if(i.getInventory().isFull()) {
-					for(LootedItem li : i.getSessionData().getLootableItems()) {
-						if(i.getInventory().contains(li.getItemName())) {
-							return true;
-						}
-					}
 
-
-				}
-
-				i.log("Test1");
-				if(i.getSessionData().getLootableItems().stream().anyMatch(gA -> 
-						gA.getItemName().equalsIgnoreCase(g.getName()))) {
-					return true;
-				}
-
-
-
-				return false;
-			});
-			 */
 
 			if(item != null) {
 				return true;
@@ -97,7 +83,7 @@ public class Looting extends ScriptState{
 		if(i.getInventory().isFull()) {
 			for(LootedItem li : i.getSessionData().getLootableItems()) {
 				if(i.getInventory().contains(li.getItemName())) {
-					i.getInventory().interact(li.getItemName(), "Drop");
+					i.getInventory().drop(li.getItemName());
 					break;
 				}
 			}
@@ -130,18 +116,24 @@ public class Looting extends ScriptState{
 							if(lc == LootCondition.LOW_ALCH) {
 								if(i.getMagic().canCast(Spells.NormalSpells.LOW_LEVEL_ALCHEMY)) {
 									if(i.getMagic().castSpell(Spells.NormalSpells.LOW_LEVEL_ALCHEMY)) {
-										i.getInventory().interact(gi.getName(), "Cast");
+										i.getInventory().getItem(gi.getName()).hover();
+										i.getMouse().click(false);
 										UtilSleep.sleep(i, 500, 750);
 									}
 								}
 							}else if(lc == LootCondition.HIGH_ALCH) {
 								if(i.getMagic().canCast(Spells.NormalSpells.HIGH_LEVEL_ALCHEMY)) {
 									if(i.getMagic().castSpell(Spells.NormalSpells.HIGH_LEVEL_ALCHEMY)) {
-										i.getInventory().interact(gi.getName(), "Cast");
+										i.getInventory().getItem(gi.getName()).hover();
+										i.getMouse().click(false);
+
 										UtilSleep.sleep(i, 500, 750);
 									}
 								}
 							}
+						}else if(lc == LootCondition.BURY){
+							i.getInventory().interact(gi.getName(), "Bury");
+							UtilSleep.sleep(i, 150, 350);
 						}
 
 					}

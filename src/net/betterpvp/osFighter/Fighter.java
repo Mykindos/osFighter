@@ -1,11 +1,13 @@
 package net.betterpvp.osFighter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
 
 import net.betterpvp.osFighter.states.*;
+import net.betterpvp.osFighter.states.looting.LootedItem;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
@@ -61,7 +63,7 @@ public class Fighter extends Script{
 
 		log("----");
 		log("Like the script? Leave a review here:");
-		log("https://osbot.org/forum/store/product/662-osminer/");
+	//	log("https://osbot.org/forum/store/product/662-osminer/");
 		log("----");
 
 	}
@@ -76,7 +78,7 @@ public class Fighter extends Script{
 
 		log("----");
 		log("Like the script? Leave a review here:");
-		log("https://osbot.org/forum/store/product/662-osminer/");
+		//log("https://osbot.org/forum/store/product/662-osminer/");
 		log("----");
 	}
 
@@ -96,14 +98,22 @@ public class Fighter extends Script{
 
 	public void start(){
 
-		
-	
-		//states.add(new AntiPattern());
+
+		getSessionData().getLootableItems().sort(new Comparator<LootedItem>() {
+			@Override
+			public int compare(LootedItem o1, LootedItem o2) {
+				return Boolean.compare(o1.isReplaceable(), o2.isReplaceable());
+			}
+		}); // Prioritise non replaceables.
+
+
+
 		states.add(new EatDrink());
 
 		states.add(new Looting());
 		states.add(new Banking());
 		states.add(new Prayer());
+		states.add(new AntiPattern());
 		states.add(new Fighting());
 
 		started = true;

@@ -67,8 +67,7 @@ public class SessionData {
 	private List<Position> combatAreaPositions = new ArrayList<>();
 	
 	public SessionData(){
-	
-		combatArea.getPositions().clear();
+
 	}
 	
 	public Area getCombatArea() {

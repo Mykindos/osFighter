@@ -20,12 +20,12 @@ public class UtilWalking {
 		return path.stream().anyMatch(p -> p.isOnMiniMap(i.getBot()));
 	}
 
-	public static boolean webWalk(Area pos, BooleanSupplier breakCondition) throws InterruptedException{
-		return webWalk(pos, breakCondition, false);
+	public static boolean webWalk(Fighter i, Area pos, BooleanSupplier breakCondition) throws InterruptedException{
+		return webWalk(i, pos, breakCondition, false);
 	}
 
 
-	public static boolean webWalk(Area pos, BooleanSupplier breakCondition, boolean teleports) throws InterruptedException{
+	public static boolean webWalk(Fighter i, Area pos, BooleanSupplier breakCondition, boolean teleports) throws InterruptedException{
 		WebWalkEvent e = new WebWalkEvent(pos);
 
 		PathPreferenceProfile prof = new PathPreferenceProfile();
@@ -49,13 +49,43 @@ public class UtilWalking {
 
 			});
 		}
-		e.execute();
+		i.execute(e);
 
 		return e.hasFinished();
 	}
-	
-	public static boolean webWalkBank(Position myPosition) throws InterruptedException {
-		return webWalk(getClosestBank(myPosition), null, true);
+
+	public static boolean webWalk(Fighter i,Position[] pos, BooleanSupplier breakCondition, boolean teleports) throws InterruptedException{
+		WebWalkEvent e = new WebWalkEvent(pos);
+
+		PathPreferenceProfile prof = new PathPreferenceProfile();
+		prof.checkInventoryForItems(true);
+		prof.checkEquipmentForItems(true);
+		prof.setAllowCharters(true);
+		prof.setAllowObstacles(true);
+		prof.setAllowGliders(true);
+		prof.setAllowTeleports(teleports);
+
+		e.setPathPreferenceProfile(prof);
+
+		if(breakCondition != null) {
+			e.setBreakCondition(new Condition(){
+
+				@Override
+				public boolean evaluate() {
+					return breakCondition.getAsBoolean();
+				}
+
+
+			});
+		}
+		i.execute(e);
+
+		return e.hasFinished();
+	}
+
+
+	public static boolean webWalkBank(Fighter i, Position myPosition) throws InterruptedException {
+		return webWalk(i, getClosestBank(myPosition), null, true);
 	}
 	
 	public static Area getClosestBank(Position myPosition) throws InterruptedException {

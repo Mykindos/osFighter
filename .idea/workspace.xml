@@ -7,18 +7,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6278adc-2574-4c5b-811d-7a64f28cd2bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/.classpath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/AntiBanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/AntiBanManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/modules/EXPCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/modules/SleepyTime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Potions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Potions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SpecWeapon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SpecWeapon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/special/Special.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/special/SpecialFactory.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Banking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Banking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/EatDrink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/EatDrink.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Fighting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Fighting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/banking/WithdrawData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/banking/WithdrawData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/looting/LootCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/looting/LootCondition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/net/betterpvp/osFighter/utilities/UtilWalking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/betterpvp/osFighter/utilities/UtilWalking.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -32,30 +37,35 @@
     <session id="1408171919">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="3" />
+          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="11" />
+          <entry key="class" value="1" />
+          <entry key="java" value="46" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="11" />
+          <entry key="CLASS" value="1" />
+          <entry key="JAVA" value="46" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3024" />
+          <entry key="java" value="15604" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3024" />
+          <entry key="JAVA" value="15604" />
         </counts>
       </usages-collector>
     </session>
@@ -63,37 +73,62 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="103" column="26" lean-forward="true" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
+            <state relative-caret-position="665">
+              <caret line="131" column="33" lean-forward="true" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Prayers.java">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="41" column="18" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="18" />
+            <state relative-caret-position="280">
+              <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2923#2924#0" expanded="true" />
-                <element signature="e#2941#2942#0" expanded="true" />
+                <element signature="e#5459#5460#0" expanded="true" />
+                <element signature="e#5475#5476#0" expanded="true" />
+                <element signature="e#5744#5745#0" expanded="true" />
+                <element signature="e#5766#5767#0" expanded="true" />
+                <element signature="e#5798#5799#0" expanded="true" />
+                <element signature="e#5818#5819#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/gui/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="1086" lean-forward="true" selection-start-line="1086" selection-end-line="1086" />
+            <state relative-caret-position="204">
+              <caret line="1129" column="24" selection-start-line="1129" selection-start-column="24" selection-end-line="1129" selection-end-column="24" />
               <folding>
-                <element signature="e#40392#40393#0" expanded="true" />
-                <element signature="e#40461#40462#0" expanded="true" />
+                <element signature="e#48297#48298#0" expanded="true" />
+                <element signature="e#48355#48356#0" expanded="true" />
+                <element signature="e#55130#55131#0" expanded="true" />
+                <element signature="e#55184#55185#0" expanded="true" />
+                <element signature="e#55221#55222#0" expanded="true" />
+                <element signature="e#55254#55255#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/MouseListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1165">
+              <caret line="96" column="5" lean-forward="true" selection-start-line="96" selection-start-column="5" selection-end-line="96" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -101,8 +136,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+            <state relative-caret-position="272">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -110,38 +145,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Fighting.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/utilities/UtilWalking.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="126" lean-forward="true" selection-start-line="126" selection-end-line="126" />
+            <state relative-caret-position="578">
+              <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Banking.java">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/AntiPattern.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/EatDrink.java">
+        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/AntiBanManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="112" column="29" lean-forward="true" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="29" />
+            <state relative-caret-position="442">
+              <caret line="42" column="21" lean-forward="true" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -149,39 +175,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3032">
-              <caret line="374" column="5" lean-forward="true" selection-start-line="374" selection-start-column="5" selection-end-line="374" selection-end-column="5" />
+            <state relative-caret-position="404">
+              <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
               <folding>
-                <element signature="e#8205#8206#0" expanded="true" />
-                <element signature="e#8234#8235#0" expanded="true" />
-                <element signature="e#8294#8295#0" expanded="true" />
-                <element signature="e#8339#8340#0" expanded="true" />
-                <element signature="e#8379#8380#0" expanded="true" />
-                <element signature="e#8408#8409#0" expanded="true" />
-                <element signature="e#8468#8469#0" expanded="true" />
+                <element signature="e#3102#3103#0" expanded="true" />
+                <element signature="e#3129#3130#0" expanded="true" />
                 <element signature="e#8513#8514#0" expanded="true" />
-                <element signature="e#8551#8552#0" expanded="true" />
-                <element signature="e#8578#8579#0" expanded="true" />
-                <element signature="e#8634#8635#0" expanded="true" />
+                <element signature="e#8540#8541#0" expanded="true" />
                 <element signature="e#8675#8676#0" expanded="true" />
-                <element signature="e#8713#8714#0" expanded="true" />
-                <element signature="e#8740#8741#0" expanded="true" />
-                <element signature="e#8796#8797#0" expanded="true" />
-                <element signature="e#8837#8838#0" expanded="true" />
-                <element signature="e#8878#8879#0" expanded="true" />
-                <element signature="e#8908#8909#0" expanded="true" />
-                <element signature="e#8970#8971#0" expanded="true" />
-                <element signature="e#9017#9018#0" expanded="true" />
+                <element signature="e#8702#8703#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/PrayerType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="55" selection-start-line="4" selection-start-column="55" selection-end-line="4" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -202,6 +205,23 @@
       <find>chkUsePrayer</find>
       <find>package net\.betterpvp\.osFighter\.states\;\n\nimport net\.betterpvp\.osFighter\.Fighter\;\nimport net\.betterpvp\.osFighter\.data\.Prayers\;\nimport net\.betterpvp\.osFighter\.data\.SessionData\;\nimport net\.betterpvp\.osFighter\.utilities\.CustomSleep\;\nimport org\.osbot\.rs07\.api\.filter\.ContainsNameFilter\;\nimport org\.osbot\.rs07\.api\.model\.Item\;\nimport org\.osbot\.rs07\.api\.ui\.Skill\;\n\npublic class Prayer extends ScriptState \{\n\n    private ContainsNameFilter\&lt;Item\&gt; prayerPots \= new ContainsNameFilter\&lt;Item\&gt;\(\&quot;prayer\&quot;\, \&quot;restore\&quot;\)\;\n\n    \@Override\n    public boolean validate\(Fighter i\) throws InterruptedException \{\n        SessionData data \= i\.getSessionData\(\)\;\n        if\(data\.isUsePrayer\(\)\) \{\n            if\(i\.getSkills\(\)\.getDynamic\(Skill\.PRAYER\) \&lt; data\.getDrinkBelowPrayer\(\)\) \{\n                return true\;\n            \}\n\n            Prayers offensivePrayer \= data\.getOffensivePrayer\(\)\;\n            if\(offensivePrayer \!\= Prayers\.NONE \&amp;\&amp; i\.prayer\.isActivated\(offensivePrayer\.getButton\(\)\)\)\{\n                return true\;\n            \}\n\n            Prayers defensivePrayer \= data\.getDefensivePrayer\(\)\;\n            if\(defensivePrayer \!\= Prayers\.NONE \&amp;\&amp; i\.prayer\.isActivated\(defensivePrayer\.getButton\(\)\)\)\{\n                return true\;\n            \}\n\n            Prayers protectionPrayer \= data\.getProtectionPrayer\(\)\;\n            if\(protectionPrayer \!\= Prayers\.NONE \&amp;\&amp; i\.prayer\.isActivated\(protectionPrayer\.getButton\(\)\)\)\{\n                return true\;\n            \}\n\n            Prayers utilityPrayer \= data\.getUtilityPrayer\(\)\;\n            if\(utilityPrayer \!\= Prayers\.NONE \&amp;\&amp; i\.prayer\.isActivated\(utilityPrayer\.getButton\(\)\)\)\{\n                return true\;\n            \}\n\n            Prayers healingPrayer \= data\.getHealingPrayer\(\)\;\n            if\(healingPrayer \!\= Prayers\.NONE \&amp;\&amp; i\.prayer\.isActivated\(healingPrayer\.getButton\(\)\)\)\{\n                return true\;\n            \}\n\n\n\n\n        \}\n\n\n        return false\;\n    \}\n\n    \@Override\n    public void run\(Fighter i\) throws InterruptedException \{\n        SessionData data \= i\.getSessionData\(\)\;\n\n        int points \= i\.getSkills\(\)\.getDynamic\(Skill\.PRAYER\)\;\n        if\(points \&lt; data\.getDrinkBelowPrayer\(\)\) \{\n\n                if\(data\.isBankWhenNoPrayerSupplies\(\)\) \{\n                    \/\/ Bank if we have no supplies to restore prayer\n                    if\(\!i\.getInventory\(\)\.contains\(prayerPots\)\) \{\n                        i\.getSessionData\(\)\.setShouldBankNow\(true\)\;\n                        return\;\n                    \}\n                \}\n\n\n\n\n                    if\(i\.getInventory\(\)\.interact\(\&quot;Drink\&quot;\, prayerPots\)\) \{\n                        new CustomSleep\(\(\) \-\&gt; i\.getSkills\(\)\.getDynamic\(Skill\.PRAYER\) \&gt; points\, 5000\)\.sleep\(\)\;\n                    \}\n\n\n        \}\n    \}\n\}\n</find>
       <find>prayer</find>
+      <find>cmbSpecWeapon</find>
+      <find>chkSafe</find>
+      <find>spec</find>
+      <find>Tabs</find>
+      <find>openInventory</find>
+      <find>Tab.Inventory</find>
+      <find>combatArea</find>
+      <find>equipmentCache</find>
+      <find>buttongroup</find>
+      <find>i.log</find>
+      <find>pnlLootcon</find>
+      <find>HIGH_ALCH</find>
+      <find>chkItemre</find>
+      <find>lblLootother</find>
+      <find>btnCopy</find>
+      <find>Walk</find>
+      <find>antiban</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,21 +231,29 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java" />
         <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/PrayerType.java" />
         <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Prayers.java" />
-        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java" />
-        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/gui/GUI.java" />
-        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/EatDrink.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Potions.java" />
         <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java" />
-        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SpecWeapon.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/looting/LootCondition.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/utilities/UtilWalking.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/EatDrink.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Banking.java" />
         <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Fighting.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/modules/EXPCheck.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/AntiBanManager.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java" />
+        <option value="$PROJECT_DIR$/src/net/betterpvp/osFighter/gui/GUI.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2262" />
-    <option name="y" value="138" />
+    <option name="x" value="204" />
+    <option name="y" value="64" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -259,6 +287,21 @@
               <item name="osFighter" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="antiban" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="osFighter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="antiban" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="osFighter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -282,6 +325,29 @@
               <item name="osFighter" type="462c0819:PsiDirectoryNode" />
               <item name="states" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="osFighter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="states" type="462c0819:PsiDirectoryNode" />
+              <item name="banking" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="osFighter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="states" type="462c0819:PsiDirectoryNode" />
+              <item name="looting" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="osFighter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="osFighter" type="462c0819:PsiDirectoryNode" />
+              <item name="utilities" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -289,12 +355,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541514602217" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541879329480" />
     <property name="last_opened_file_path" value="C:/Program Files/Git/bin/git.exe" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -322,10 +388,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18123667" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1391258" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -342,7 +408,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3290993" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.36442515" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -357,51 +423,10 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2873">
-          <caret line="210" column="33" selection-start-line="210" selection-start-column="33" selection-end-line="210" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Prayers.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
+        <state relative-caret-position="646">
           <caret line="41" column="18" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2923#2924#0" expanded="true" />
-            <element signature="e#2941#2942#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3032">
-          <caret line="374" column="5" lean-forward="true" selection-start-line="374" selection-start-column="5" selection-end-line="374" selection-end-column="5" />
-          <folding>
-            <element signature="e#8205#8206#0" expanded="true" />
-            <element signature="e#8234#8235#0" expanded="true" />
-            <element signature="e#8294#8295#0" expanded="true" />
-            <element signature="e#8339#8340#0" expanded="true" />
-            <element signature="e#8379#8380#0" expanded="true" />
-            <element signature="e#8408#8409#0" expanded="true" />
-            <element signature="e#8468#8469#0" expanded="true" />
-            <element signature="e#8513#8514#0" expanded="true" />
-            <element signature="e#8551#8552#0" expanded="true" />
-            <element signature="e#8578#8579#0" expanded="true" />
-            <element signature="e#8634#8635#0" expanded="true" />
-            <element signature="e#8675#8676#0" expanded="true" />
-            <element signature="e#8713#8714#0" expanded="true" />
-            <element signature="e#8740#8741#0" expanded="true" />
-            <element signature="e#8796#8797#0" expanded="true" />
-            <element signature="e#8837#8838#0" expanded="true" />
-            <element signature="e#8878#8879#0" expanded="true" />
-            <element signature="e#8908#8909#0" expanded="true" />
-            <element signature="e#8970#8971#0" expanded="true" />
-            <element signature="e#9017#9018#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -412,28 +437,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/gui/GUI.java">
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SpecWeapon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="1086" lean-forward="true" selection-start-line="1086" selection-end-line="1086" />
-          <folding>
-            <element signature="e#40392#40393#0" expanded="true" />
-            <element signature="e#40461#40462#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java">
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/AntiBan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="103" column="26" lean-forward="true" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
+        <state relative-caret-position="510">
+          <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java">
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/modules/FriendCheck.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="357">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/KeyListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/javax/swing/DefaultListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1504">
+          <caret line="363" column="16" selection-start-line="363" selection-start-column="16" selection-end-line="363" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../../Downloads/osbot 2.5.25.jar!/org/osbot/rs07/api/map/Position.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/ScriptState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Fighting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="148" column="11" lean-forward="true" selection-start-line="148" selection-start-column="11" selection-end-line="148" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -442,29 +498,147 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/EatDrink.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="112" column="29" lean-forward="true" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="29" />
+        <state relative-caret-position="-374">
+          <caret line="129" column="42" lean-forward="true" selection-start-line="129" selection-start-column="42" selection-end-line="129" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Banking.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        <state relative-caret-position="765">
+          <caret line="74" lean-forward="true" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Fighting.java">
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/looting/LootedItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="126" lean-forward="true" selection-start-line="126" selection-end-line="126" />
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/looting/LootCondition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/Potions.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Looting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="131" column="33" lean-forward="true" selection-start-line="131" selection-start-column="33" selection-end-line="131" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/Paint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="167" lean-forward="true" selection-start-line="167" selection-end-line="167" />
+          <folding>
+            <element signature="e#5459#5460#0" expanded="true" />
+            <element signature="e#5475#5476#0" expanded="true" />
+            <element signature="e#5744#5745#0" expanded="true" />
+            <element signature="e#5766#5767#0" expanded="true" />
+            <element signature="e#5798#5799#0" expanded="true" />
+            <element signature="e#5818#5819#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/data/SessionData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="62" column="34" lean-forward="true" selection-start-line="62" selection-start-column="34" selection-end-line="62" selection-end-column="34" />
+          <folding>
+            <element signature="e#3102#3103#0" expanded="true" />
+            <element signature="e#3129#3130#0" expanded="true" />
+            <element signature="e#8513#8514#0" expanded="true" />
+            <element signature="e#8540#8541#0" expanded="true" />
+            <element signature="e#8675#8676#0" expanded="true" />
+            <element signature="e#8702#8703#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/AntiPattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/modules/EXPCheck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+          <folding>
+            <element signature="e#333#334#0" expanded="true" />
+            <element signature="e#375#376#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/managers/MouseListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/antiban/AntiBanManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="42" column="21" lean-forward="true" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/Fighter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1165">
+          <caret line="96" column="5" lean-forward="true" selection-start-line="96" selection-start-column="5" selection-end-line="96" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/states/Prayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/utilities/UtilWalking.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="54" column="5" lean-forward="true" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/betterpvp/osFighter/gui/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="1129" column="24" selection-start-line="1129" selection-start-column="24" selection-end-line="1129" selection-end-column="24" />
+          <folding>
+            <element signature="e#48297#48298#0" expanded="true" />
+            <element signature="e#48355#48356#0" expanded="true" />
+            <element signature="e#55130#55131#0" expanded="true" />
+            <element signature="e#55184#55185#0" expanded="true" />
+            <element signature="e#55221#55222#0" expanded="true" />
+            <element signature="e#55254#55255#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

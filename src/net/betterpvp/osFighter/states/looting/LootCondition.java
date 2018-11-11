@@ -5,5 +5,6 @@ public enum LootCondition {
 	NONE,
 	NOTED,
 	LOW_ALCH,
-	HIGH_ALCH
+	HIGH_ALCH,
+	BURY
 }

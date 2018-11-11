@@ -1,8 +1,10 @@
 package net.betterpvp.osFighter.states;
 
+import net.betterpvp.osFighter.utilities.UtilSleep;
 import org.osbot.rs07.api.filter.ContainsNameFilter;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.model.Item;
+import org.osbot.rs07.api.ui.Message;
 import org.osbot.rs07.api.ui.Skill;
 
 import net.betterpvp.osFighter.Fighter;
@@ -11,11 +13,18 @@ import net.betterpvp.osFighter.data.SessionData;
 import net.betterpvp.osFighter.utilities.CustomSleep;
 import net.betterpvp.osFighter.utilities.UtilMath;
 import net.betterpvp.osFighter.utilities.UtilWalking;
+import org.osbot.rs07.listener.MessageListener;
 
-public class EatDrink extends ScriptState{
+public class EatDrink extends ScriptState implements MessageListener {
 
 	private int deviateBy = 0;
-
+	private boolean drinkAntifire = true;
+	private ContainsNameFilter<Item> teleportFilter = new ContainsNameFilter<>("teleport");
+	// 1575 Stamina (Check > 0)
+	// 102 Superantipoison (Check < 0)
+	// 115 extended antifire?
+	// Your poison resistance is about to wear off
+	// Antifire potion is about to wear off
 
 
 	@Override
@@ -43,30 +52,47 @@ public class EatDrink extends ScriptState{
 				}
 			}
 
+			if(data.isDrinkAntifirePotions()){
+				if(drinkAntifire){
+					return true;
+				}
+			}
 
 
 			if(data.isDrinkAttackPotions()) {
-				checkStat(i, Skill.ATTACK, Potions.ATTACK);
+				if(checkStat(i, Skill.ATTACK, Potions.ATTACK)){
+					return true;
+				}
 			}
 
 			if(data.isDrinkStrengthPotions()) {
-				checkStat(i, Skill.STRENGTH, Potions.STRENGTH);
+				if(checkStat(i, Skill.STRENGTH, Potions.STRENGTH)){
+					return true;
+				}
 			}
 
 			if(data.isDrinkDefencePotions()) {
-				checkStat(i, Skill.DEFENCE, Potions.DEFENCE);
+				if(checkStat(i, Skill.DEFENCE, Potions.DEFENCE)){
+					return true;
+				}
 			}
 
 			if(data.isDrinkCombatPotions()) {
-				checkStat(i, Skill.ATTACK, Potions.COMBAT);
+				if(checkStat(i, Skill.ATTACK, Potions.COMBAT)){
+					return true;
+				}
 			}
 
 			if(data.isDrinkRangingPotions()) {
-				checkStat(i, Skill.RANGED, Potions.RANGED);
+				if(checkStat(i, Skill.RANGED, Potions.RANGED)){
+					return true;
+				}
 			}
 
 			if(data.isDrinkMagicPotions()) {
-				checkStat(i, Skill.MAGIC, Potions.MAGIC);
+				if(checkStat(i, Skill.MAGIC, Potions.MAGIC)){
+					return true;
+				}
 			}
 
 		}
@@ -102,12 +128,14 @@ public class EatDrink extends ScriptState{
 				}else {
 					data.setShouldBankNow(true);
 					if(data.isBanking()) {
-						i.getWalking().webWalk(UtilWalking.getClosestBank(i.myPosition()));
-						
+
+						UtilWalking.webWalk(i, UtilWalking.getClosestBank(i.myPosition()), null, true);
+
+
 					}else {
-						if(i.getInventory().contains("Teleport")) {
+						if(i.getInventory().contains(teleportFilter)) {
 							Position p = i.myPosition();
-							i.getInventory().interact("Break", "Teleport");
+							i.getInventory().interact("Break", teleportFilter);
 							new CustomSleep(() -> i.myPosition() != p, 10000).sleep();
 						}
 					}
@@ -124,9 +152,90 @@ public class EatDrink extends ScriptState{
 		}
 
 		if(data.isDrinkPotions()) {
+			if(i.getCombat().isPoisoned()) {
+				if(data.isDrinkAntidotePotions() || data.isDrinkAntipoisonPotions() || data.isDrinkAntivenomPotions()) {
+					drinkPotion(i, Potions.ANTIPOISON.getOptions());
+					new CustomSleep(() -> !i.getCombat().isPoisoned(), 1000).sleep();
 
+				}
+			}
+
+			if(i.getCombat().isDiseased()){
+				if(data.isDrinkAntidotePotions() || data.isDrinkAntivenomPotions()){
+					drinkPotion(i, Potions.ANTIVENOM.getOptions());
+					new CustomSleep(() -> !i.getCombat().isDiseased(), 500).sleep();
+					return;
+				}
+			}
+
+			if(data.isDrinkAntifirePotions()){
+				if(drinkAntifire){
+					if(drinkPotion(i, Potions.ANTIFIRE.getOptions())){
+						drinkAntifire = false;
+						UtilSleep.sleep(i, 250, 500);
+					}
+				}
+			}
+
+
+
+			if(data.isDrinkAttackPotions()) {
+				if(checkStat(i, Skill.ATTACK, Potions.ATTACK)){
+					drinkPotion(i, Potions.ATTACK.getOptions());
+					new CustomSleep(() -> !checkStat(i, Skill.ATTACK, Potions.ATTACK), 500).sleep();
+				}
+			}
+
+			if(data.isDrinkStrengthPotions()) {
+				if(checkStat(i, Skill.STRENGTH, Potions.STRENGTH)){
+					drinkPotion(i, Potions.STRENGTH.getOptions());
+					new CustomSleep(() -> !checkStat(i, Skill.STRENGTH, Potions.STRENGTH), 500).sleep();
+				}
+			}
+
+			if(data.isDrinkDefencePotions()) {
+				if(checkStat(i, Skill.DEFENCE, Potions.DEFENCE)){
+					drinkPotion(i, Potions.DEFENCE.getOptions());
+					new CustomSleep(() -> !checkStat(i, Skill.DEFENCE, Potions.DEFENCE), 500).sleep();
+				}
+			}
+
+			if(data.isDrinkCombatPotions()) {
+				if(checkStat(i, Skill.ATTACK, Potions.COMBAT)){
+					drinkPotion(i, Potions.COMBAT.getOptions());
+					new CustomSleep(() -> !checkStat(i, Skill.ATTACK, Potions.COMBAT), 500).sleep();
+				}
+			}
+
+			if(data.isDrinkRangingPotions()) {
+				if(checkStat(i, Skill.RANGED, Potions.RANGED)){
+					drinkPotion(i, Potions.ATTACK.getOptions());
+					new CustomSleep(() -> !checkStat(i, Skill.RANGED, Potions.RANGED), 500).sleep();
+				}
+			}
+
+			if(data.isDrinkMagicPotions()) {
+				if(checkStat(i, Skill.MAGIC, Potions.MAGIC)){
+					drinkPotion(i, Potions.MAGIC.getOptions());
+					new CustomSleep(() -> !checkStat(i, Skill.MAGIC, Potions.MAGIC), 500).sleep();
+				}
+			}
 		}
 
 	}
 
+	private boolean drinkPotion(Fighter i, ContainsNameFilter<Item> filter){
+
+		if(i.getInventory().interact("Drink", filter)){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void onMessage(Message message) throws InterruptedException {
+		if(message.getMessage().toLowerCase().contains("antifire potion is about to wear off")){
+			drinkAntifire = true;
+		}
+	}
 }

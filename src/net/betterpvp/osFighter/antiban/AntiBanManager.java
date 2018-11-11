@@ -6,11 +6,9 @@ import java.util.Map.Entry;
 
 import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.antiban.modules.CameraMovement;
-import net.betterpvp.osFighter.antiban.modules.EXPCheck;
 import net.betterpvp.osFighter.antiban.modules.FriendCheck;
 import net.betterpvp.osFighter.antiban.modules.HoverPlayer;
 import net.betterpvp.osFighter.antiban.modules.MouseMovement;
-import net.betterpvp.osFighter.antiban.modules.SleepyTime;
 import net.betterpvp.osFighter.utilities.UtilMath;
 
 import java.util.Set;
@@ -20,15 +18,17 @@ public class AntiBanManager {
 	
 	public AntiBanManager(Fighter i){
 		addModule(new FriendCheck(i));
-		addModule(new EXPCheck(i));
+
 		addModule(new HoverPlayer(i));
 		addModule(new MouseMovement(i));
-		addModule(new SleepyTime(i));
+
 		addModule(new CameraMovement(i));
 	}
 	
 	private static Set<AntiBan> ab = new HashSet<>();
 	private static HashMap<AntiBan, Double> picker = new HashMap<>();
+
+
 	
 	public static Set<AntiBan> getAntiBans(){
 		return ab;

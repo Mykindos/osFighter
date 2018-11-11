@@ -167,6 +167,14 @@ public class Paint extends BotMouseListener implements Painter, MessageListener{
 				x+=250;
 
 			}
+
+
+
+				if (i.getSessionData().getSafeSpot() != null) {
+					g.setColor(Color.YELLOW);
+					g.drawPolygon(i.getSessionData().getSafeSpot().getPolygon(i.getBot()));
+				}
+
 		}
 
 	}
