@@ -57,7 +57,7 @@ public class SessionData {
 	private Prayers protectionPrayer;
 	
 	//Other Settings
-	private boolean isUsingCannon;
+	private boolean isAFKMode;
 	private boolean isSafeSpotting;
 	private Position safeSpot;
 	private SpecWeapon specWeapon;
@@ -65,6 +65,9 @@ public class SessionData {
 	
 	private Area combatArea = new Area(0,0,0,0);
 	private List<Position> combatAreaPositions = new ArrayList<>();
+
+	private long lastAttacked = System.currentTimeMillis();
+	private Position resetPosition;
 	
 	public SessionData(){
 
@@ -83,13 +86,13 @@ public class SessionData {
 	}
 	
 	
-	public boolean isUsingCannon() {
-		return isUsingCannon;
+	public boolean isAFKMode() {
+		return isAFKMode;
 	}
 
 
-	public void setUsingCannon(boolean isUsingCannon) {
-		this.isUsingCannon = isUsingCannon;
+	public void setAFKMode(boolean isUsingCannon) {
+		this.isAFKMode = isUsingCannon;
 	}
 
 	public boolean isSafeSpotting() {
@@ -429,5 +432,21 @@ public class SessionData {
 
 	public void setProtectionPrayer(Prayers protectionPrayer) {
 		this.protectionPrayer = protectionPrayer;
+	}
+
+	public long getLastAttacked() {
+		return lastAttacked;
+	}
+
+	public void setLastAttacked(long lastAttacked) {
+		this.lastAttacked = lastAttacked;
+	}
+
+	public Position getResetPosition() {
+		return resetPosition;
+	}
+
+	public void setResetPosition(Position resetPosition) {
+		this.resetPosition = resetPosition;
 	}
 }

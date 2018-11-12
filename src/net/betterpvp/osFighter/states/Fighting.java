@@ -36,7 +36,7 @@ public class Fighting extends ScriptState{
 	public void run(Fighter i) throws InterruptedException {
 		SessionData data = i.getSessionData();
 
-		if(data.getCombatAreaPositions().size() == 0 && data.getStartPosition().distance(i.myPosition()) > 30) {
+		if(data.getCombatAreaPositions().size() == 0 && data.getStartPosition().distance(i.myPosition()) > 50) {
 			UtilWalking.webWalk(i, new Position[] {data.getStartPosition()}, null, true);
 			return;
 		}else {
@@ -61,6 +61,7 @@ public class Fighting extends ScriptState{
 		if(i.myPlayer().isUnderAttack() ||
 				(i.myPlayer().getInteracting() != null && lastNPC != null && i.myPlayer().getInteracting() == lastNPC)) {
 			// Maybe add a hover option when target is low health
+			data.setLastAttacked(System.currentTimeMillis());
 
 
 
@@ -148,16 +149,23 @@ public class Fighting extends ScriptState{
 
 		});
 
+		if(!i.getSettings().isRunning()){
+			if(i.getSettings().getRunEnergy() > 15){
+				i.getSettings().setRunning(true);
+			}
+		}
+
+		if(!data.isAFKMode()){
 		if(npc != null) {
 			UtilSleep.sleep(i, 100, 250);
-			if(npc.interact("Attack")) {
+			if (npc.interact("Attack")) {
 				lastNPC = npc;
-				new CustomSleep(() -> (i.myPlayer().getInteracting() != null && i.myPlayer().isUnderAttack()) 
+				new CustomSleep(() -> (i.myPlayer().getInteracting() != null && i.myPlayer().isUnderAttack())
 						|| (npc.isUnderAttack() && i.myPlayer().getInteracting() != null && i.myPlayer().getInteracting() == npc
 						&& npc.getInteracting() == i.myPlayer() && i.myPlayer().isUnderAttack()
-					|| (i.myPlayer().getInteracting() != null && lastNPC != null && i.myPlayer().getInteracting() == lastNPC)), 5000).sleep();
+						|| (i.myPlayer().getInteracting() != null && lastNPC != null && i.myPlayer().getInteracting() == lastNPC)), 5000).sleep();
 
-				if(data.isSafeSpotting()) {
+				if (data.isSafeSpotting()) {
 					if (i.myPosition().getX() != data.getSafeSpot().getX() || i.myPosition().getY() != data.getSafeSpot().getY()) {
 						i.log("Walking to safespot");
 						walkSafeSpot(i);
@@ -170,6 +178,7 @@ public class Fighting extends ScriptState{
 
 
 			}
+		}
 		}
 
 	}

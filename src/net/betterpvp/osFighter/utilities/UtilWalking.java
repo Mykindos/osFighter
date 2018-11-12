@@ -105,6 +105,10 @@ public class UtilWalking {
 		return banks.get(0);
 	}
 
+	public static Area getArea(Position p, int size){
+		return new Area(p.translate(-size, -size), p.translate(size, size));
+	}
+
 
 
 

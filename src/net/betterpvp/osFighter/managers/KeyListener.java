@@ -21,7 +21,7 @@ public class KeyListener extends BotKeyListener{
 	@Override
 	public void checkKeyEvent(KeyEvent e) {
 
-		if(UtilTime.elapsed(lastExecute, 50)) {
+		if(UtilTime.elapsed(lastExecute, 100)) {
 			if(e.getKeyCode() == KeyEvent.VK_F1) {
 				i.log("Area Definition Started!");
 				i.log("To define your area, hold shift and left click the top left and \n\t\t\tbottom right corners of your fight area.");
@@ -35,6 +35,9 @@ public class KeyListener extends BotKeyListener{
 			}else if(e.getKeyCode() == KeyEvent.VK_F3) {
 				i.getSessionData().setSafeSpot(i.myPosition());
 				i.log("Safe Spot set to your current position!");
+			}else if(e.getKeyCode() == KeyEvent.VK_F4){
+				i.getSessionData().setResetPosition(i.myPosition());
+				i.log("Reset position set");
 			}
 			lastExecute = System.currentTimeMillis();
 		}

@@ -108,12 +108,29 @@ public class Fighter extends Script{
 
 
 
-		states.add(new EatDrink());
 
-		states.add(new Looting());
-		states.add(new Banking());
-		states.add(new Prayer());
+		if(getSessionData().isEatingFood() || getSessionData().isDrinkPotions()) {
+			states.add(new EatDrink());
+		}
+
+		if(getSessionData().getLootableItems().size() > 0) {
+			states.add(new Looting());
+		}
+
+		if(getSessionData().isBanking()) {
+			states.add(new Banking());
+		}
+
+		if(getSessionData().isUsePrayer()) {
+			states.add(new Prayer());
+		}
+
 		states.add(new AntiPattern());
+
+		if(getSessionData().getResetPosition() != null){
+			states.add(new ResetArea());
+		}
+
 		states.add(new Fighting());
 
 		started = true;
