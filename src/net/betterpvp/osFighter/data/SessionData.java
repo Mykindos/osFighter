@@ -2,7 +2,10 @@ package net.betterpvp.osFighter.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.betterpvp.osFighter.scheduler.Task;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.script.Script;
@@ -15,7 +18,7 @@ public class SessionData {
 
 	private int maxLoopTime, minLoopTime;
 
-	private Bank bank;
+	private Bank bank = Bank.AUTO;
 
 
 	private long lastAntiban;
@@ -55,7 +58,8 @@ public class SessionData {
 	private Prayers utilityPrayer;
 	private Prayers healingPrayer;
 	private Prayers protectionPrayer;
-	
+
+
 	//Other Settings
 	private boolean isAFKMode;
 	private boolean isSafeSpotting;
@@ -68,10 +72,13 @@ public class SessionData {
 
 	private long lastAttacked = System.currentTimeMillis();
 	private Position resetPosition;
+
+	private Queue<Task> taskSchedule = new ConcurrentLinkedQueue<>();
 	
 	public SessionData(){
 
 	}
+
 	
 	public Area getCombatArea() {
 		return combatArea;
@@ -449,4 +456,10 @@ public class SessionData {
 	public void setResetPosition(Position resetPosition) {
 		this.resetPosition = resetPosition;
 	}
+
+	public Queue<Task> getTaskSchedule() {
+		return taskSchedule;
+	}
+
+
 }

@@ -1,5 +1,6 @@
 package net.betterpvp.osFighter.states;
 
+import net.betterpvp.osFighter.scheduler.Task;
 import net.betterpvp.osFighter.utilities.UtilWalking;
 import org.osbot.rs07.api.filter.ContainsNameFilter;
 import org.osbot.rs07.api.map.Position;
@@ -57,9 +58,25 @@ public class Fighting extends ScriptState{
 
 		}
 
+		if(data.getTaskSchedule().size() > 0){
+			Task task = data.getTaskSchedule().peek();
+			if(task != null){
+				if(task.isComplete(i)){
+					data.getTaskSchedule().remove(task);
+					return;
+				}
+
+				if(task.validate(i)){
+					task.runTask(i);
+					data.getTaskSchedule().remove(task);
+				}
+			}
+		}
+
 
 		if(i.myPlayer().isUnderAttack() ||
-				(i.myPlayer().getInteracting() != null && lastNPC != null && i.myPlayer().getInteracting() == lastNPC)) {
+				(i.myPlayer().getInteracting() != null && lastNPC != null && i.myPlayer().getInteracting() == lastNPC
+				&& lastNPC.getHealthPercent() > 0)) {
 			// Maybe add a hover option when target is low health
 			data.setLastAttacked(System.currentTimeMillis());
 

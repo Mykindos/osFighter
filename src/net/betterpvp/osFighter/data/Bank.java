@@ -6,7 +6,8 @@ import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.constants.Banks;
 
 public enum Bank {
-	
+
+	AUTO("Auto", null),
 	LUMBRIDGE_UPPER("Lumbridge Upper", Banks.LUMBRIDGE_UPPER),
 	LUMBRIDGE_LOWER("Lumbridge Lower", Banks.LUMBRIDGE_LOWER),
 	AL_KHARID("Al Kharid", Banks.AL_KHARID),
@@ -41,7 +42,9 @@ public enum Bank {
 	PORT_SARIM("Port Sarim - Deposit", new Area(3042, 3237, 3050, 3234)),
 	SHANTAY_PASS("Shantay Pass", new Area(3305, 3122, 3310, 3118)),
 	NARDAH("Nardah", new Area(3424, 2894, 3431, 2889)),
-	MINING_GUILD("Mining Guild", new Area(3010, 9721, 3017, 9715));
+	MINING_GUILD("Mining Guild", new Area(3010, 9721, 3017, 9715)),
+	KOUREND("Kourend", new Area(1610, 3683, 1613, 3679).setPlane(2)),
+	KELDAGRIM("Keldagrim", new Area(2834, 10214, 2841, 10204));
 	
 	private String name;
 	private Area area;
@@ -71,6 +74,11 @@ public enum Bank {
 		}
 		
 		return areas;
+	}
+
+	@Override
+	public String toString(){
+		return getName();
 	}
 
 }

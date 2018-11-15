@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import net.betterpvp.osFighter.data.BankOverrides;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.event.WebWalkEvent;
@@ -15,6 +16,7 @@ import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.data.Bank;
 
 public class UtilWalking {
+	private final static Area STRONGHOLD = new Area(1850, 5172, 2408, 5329);
 
 	public static boolean canWalkPath(Fighter i, List<Position> path){
 		return path.stream().anyMatch(p -> p.isOnMiniMap(i.getBot()));
@@ -37,6 +39,19 @@ public class UtilWalking {
 		prof.setAllowTeleports(teleports);
 
 		e.setPathPreferenceProfile(prof);
+
+		if(STRONGHOLD.contains(i.myPosition())){
+
+			e.setBreakCondition(new Condition(){
+
+				@Override
+				public boolean evaluate() {
+					return i.getDialogues().isPendingContinuation() || i.getDialogues().isPendingOption();
+				}
+
+
+			});
+		}
 
 		if(breakCondition != null) {
 			e.setBreakCondition(new Condition(){
@@ -67,6 +82,19 @@ public class UtilWalking {
 
 		e.setPathPreferenceProfile(prof);
 
+		if(STRONGHOLD.contains(i.myPosition())){
+
+			e.setBreakCondition(new Condition(){
+
+				@Override
+				public boolean evaluate() {
+					return i.getDialogues().isPendingContinuation() || i.getDialogues().isPendingOption();
+				}
+
+
+			});
+		}
+
 		if(breakCondition != null) {
 			e.setBreakCondition(new Condition(){
 
@@ -89,6 +117,15 @@ public class UtilWalking {
 	}
 	
 	public static Area getClosestBank(Position myPosition) throws InterruptedException {
+
+
+		for(BankOverrides b : BankOverrides.values()){
+			if(b.getArea().contains(myPosition)){
+				return b.getArea();
+			}
+		}
+
+
 		List<Area> banks = Arrays.asList(Bank.getBankArea());
 		banks.sort(new Comparator<Area>() {
 

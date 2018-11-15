@@ -3,6 +3,7 @@ package net.betterpvp.osFighter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.SwingUtilities;
 
@@ -98,16 +99,17 @@ public class Fighter extends Script{
 
 	public void start(){
 
+		states.clear(); // In case settings are modified
 
-		getSessionData().getLootableItems().sort(new Comparator<LootedItem>() {
-			@Override
-			public int compare(LootedItem o1, LootedItem o2) {
-				return Boolean.compare(o1.isReplaceable(), o2.isReplaceable());
-			}
-		}); // Prioritise non replaceables.
+		getSessionData().getLootableItems().sort((o1, o2) -> Boolean.compare(o1.isReplaceable(), o2.isReplaceable())); // Prioritise non replaceables.
 
 
 
+
+		states.add(new DialogueHandler());
+		if(getSessionData().isBanking()) {
+			states.add(new Banking());
+		}
 
 		if(getSessionData().isEatingFood() || getSessionData().isDrinkPotions()) {
 			states.add(new EatDrink());
@@ -117,9 +119,7 @@ public class Fighter extends Script{
 			states.add(new Looting());
 		}
 
-		if(getSessionData().isBanking()) {
-			states.add(new Banking());
-		}
+
 
 		if(getSessionData().isUsePrayer()) {
 			states.add(new Prayer());

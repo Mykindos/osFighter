@@ -250,6 +250,8 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
                 setText("Time Ran: " + totalTime((int) i.getSkills().getExperienceTracker().getElapsed(Skill.HITPOINTS)));
             }
         });
+
+        addCommonPaintObject(new Label("Edit Settings", 335, 321, 100, 20, "Edit Settings"));
     }
 
     private void drawMouse(Fighter instance, Graphics2D g) {
@@ -302,8 +304,15 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
     @Override
     public void checkMouseEvent(MouseEvent e) {
+        if(getPaintObject("Edit Settings").getRectangle().contains(e.getPoint())) {
+            if (i.getGUI() == null) return;
 
-        if (getPaintObject("Active Paint").getRectangle().contains(e.getPoint())) {
+            i.started = false;
+            i.getGUI().setVisible(true);
+            if(!i.getBot().getScriptExecutor().isPaused()) {
+                e.consume();
+            }
+        } else if (getPaintObject("Active Paint").getRectangle().contains(e.getPoint())) {
 
             if (getPaintObject("Active Paint").isEnabled()) {
                 getPaintObject("Active Paint").setEnabled(false);
@@ -322,8 +331,9 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
                 paintEnabled = true;
             }
-            e.consume();
-
+            if(!i.getBot().getScriptExecutor().isPaused()) {
+                e.consume();
+            }
 
         }
 
