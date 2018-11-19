@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import net.betterpvp.osFighter.managers.paint.SkillExperience;
 import net.betterpvp.osFighter.scheduler.Task;
 import org.osbot.rs07.api.map.Area;
 import org.osbot.rs07.api.map.Position;
@@ -74,6 +76,7 @@ public class SessionData {
 	private Position resetPosition;
 
 	private Queue<Task> taskSchedule = new ConcurrentLinkedQueue<>();
+	private List<SkillExperience> expTrack = new CopyOnWriteArrayList<>();
 	
 	public SessionData(){
 
@@ -462,4 +465,7 @@ public class SessionData {
 	}
 
 
+	public List<SkillExperience> getExpTrack() {
+		return expTrack;
+	}
 }

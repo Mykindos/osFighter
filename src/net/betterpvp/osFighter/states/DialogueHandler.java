@@ -59,6 +59,6 @@ public class DialogueHandler extends ScriptState{
 
                 );
 
-        UtilSleep.sleep(i, 250, 500);
+        UtilSleep.sleep(250, 500);
     }
 }

@@ -20,6 +20,8 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
+import net.betterpvp.osFighter.data.SessionData;
+import net.betterpvp.osFighter.utilities.UtilTime;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.Message;
 import org.osbot.rs07.api.ui.Skill;
@@ -50,10 +52,11 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
     private Color cursorColor = Color.CYAN;
     private AffineTransform oldTransform;
     private LinkedList<MousePathPoint> mousePath = new LinkedList<>();
-    private List<SkillExperience> expTrack = new ArrayList<>();
+
 
     public Paint(Fighter i) {
         this.i = i;
+        SessionData data = i.getSessionData();
         String url = "http://mykindos.me/osFighter/";
         i.getSkills().getExperienceTracker().start(Skill.HITPOINTS);
         i.getSkills().getExperienceTracker().start(Skill.ATTACK);
@@ -65,13 +68,13 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
 
         try {
-            expTrack.add(new SkillExperience(i, Skill.HITPOINTS, ImageIO.read(new URL(url + "Hitpoints.png"))));
-            expTrack.add(new SkillExperience(i, Skill.ATTACK, ImageIO.read(new URL(url + "Attack.png"))));
-            expTrack.add(new SkillExperience(i, Skill.STRENGTH, ImageIO.read(new URL(url + "Strength.png"))));
-            expTrack.add(new SkillExperience(i, Skill.DEFENCE, ImageIO.read(new URL(url + "Defence.png"))));
-            expTrack.add(new SkillExperience(i, Skill.RANGED, ImageIO.read(new URL(url + "Ranged.png"))));
-            expTrack.add(new SkillExperience(i, Skill.MAGIC, ImageIO.read(new URL(url + "Magic.png"))));
-            expTrack.add(new SkillExperience(i, Skill.PRAYER, ImageIO.read(new URL(url + "Prayer.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.HITPOINTS, ImageIO.read(new URL(url + "Hitpoints.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.ATTACK, ImageIO.read(new URL(url + "Attack.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.STRENGTH, ImageIO.read(new URL(url + "Strength.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.DEFENCE, ImageIO.read(new URL(url + "Defence.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.RANGED, ImageIO.read(new URL(url + "Ranged.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.MAGIC, ImageIO.read(new URL(url + "Magic.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.PRAYER, ImageIO.read(new URL(url + "Prayer.png"))));
             addPaintObject(new PaintImage("Active Paint", 0, 309, ImageIO.read(new URL(url + "paint.png"))));
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -150,7 +153,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
                 return;
             }
 
-            expTrack.sort(new Comparator<SkillExperience>() {
+            i.getSessionData().getExpTrack().sort(new Comparator<SkillExperience>() {
 
                 @Override
                 public int compare(SkillExperience a, SkillExperience b) {
@@ -161,7 +164,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
             int x = 9;
             int y = 345;
-            for (SkillExperience e : expTrack) {
+            for (SkillExperience e :  i.getSessionData().getExpTrack()) {
                 if (e.getGainedExp() <= 0) continue;
                 if (x >= 260) {
                     x = 9;
@@ -179,7 +182,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
                 Font f2 = new Font("Calibri", Font.PLAIN, 12);
                 g.setFont(f2);
-                g.drawString(totalTime((int) i.getExperienceTracker().getTimeToLevel(e.getSkill())), x + 66, y + 10);
+                g.drawString(UtilTime.totalTime((int) i.getExperienceTracker().getTimeToLevel(e.getSkill())), x + 66, y + 10);
                 g.drawString(NumberFormat.getNumberInstance(Locale.US).format(
                         i.getExperienceTracker().getGainedXPPerHour(e.getSkill())), x + 87, y + 24);
                 g.drawString(NumberFormat.getNumberInstance(Locale.US).format(
@@ -230,24 +233,21 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
     }
 
 
-    private String totalTime(int timer) {
-        final int sec = timer / 1000, h = sec / 3600, m = sec / 60 % 60, s = sec % 60;
-        return (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m) + ":"
-                + (s < 10 ? "0" + s : s);
-    }
+
 
 
     public void loadCommonLabels() {
-        addPaintObject(new Label("Hotkeys", 5, 10, "Hotkeys"));
-        addPaintObject(new Label("F1", 5, 22, "F1: Enable Area Selection"));
-        addPaintObject(new Label("F2", 5, 34, "F2: Disable Area Selection"));
-        addPaintObject(new Label("F3", 5, 46, "F3: Set Safe Spot"));
-        addPaintObject(new Label("F4", 5, 58, "F4: Set Reset Position"));
+        addPaintObject(new Label("Version", 5, 15, "v" + i.getVersion()));
+        addPaintObject(new Label("Hotkeys", 5, 27, "Hotkeys"));
+        addPaintObject(new Label("F1", 5, 39, "F1: Enable Area Selection"));
+        addPaintObject(new Label("F2", 5, 51, "F2: Disable Area Selection"));
+        addPaintObject(new Label("F3", 5, 63, "F3: Set Safe Spot"));
+        addPaintObject(new Label("F4", 5, 75, "F4: Set Reset Position"));
         addPaintObject(new UpdatingLabel("TimeRunning", 335, 338) {
             @Override
             public void update(Paint p) {
 
-                setText("Time Ran: " + totalTime((int) i.getSkills().getExperienceTracker().getElapsed(Skill.HITPOINTS)));
+                setText("Time Ran: " + UtilTime.totalTime((int) i.getSkills().getExperienceTracker().getElapsed(Skill.HITPOINTS)));
             }
         });
 

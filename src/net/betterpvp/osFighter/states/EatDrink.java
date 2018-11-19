@@ -184,7 +184,7 @@ public class EatDrink extends ScriptState implements MessageListener {
                 if (drinkAntifire) {
                     if (drinkPotion(i, Potions.ANTIFIRE.getOptions())) {
                         drinkAntifire = false;
-                        UtilSleep.sleep(i, 250, 500);
+                        UtilSleep.sleep( 250, 500);
                     }
                 }
             }

@@ -17,7 +17,8 @@ public class EquipTask implements Task {
 
 	@Override
 	public void runTask(Fighter i) {
-
+		int slot = i.getInventory().getSlot(item);
+		i.getInventory().interact(slot, "Wield", "Wear");
 	}
 
 	@Override

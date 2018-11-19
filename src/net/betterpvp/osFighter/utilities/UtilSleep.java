@@ -12,7 +12,7 @@ public class UtilSleep {
 	 * @param a First integer, the minimum
 	 * @param b Second integer, the maximum
 	 */
-	public static void sleep(Fighter i, int min, int max){
+	public static void sleep( int min, int max){
 	
 		int random = Script.random(min, max);
 		
@@ -21,7 +21,7 @@ public class UtilSleep {
 			Script.sleep(random);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 	}

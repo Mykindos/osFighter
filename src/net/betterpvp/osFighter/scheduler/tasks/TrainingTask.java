@@ -38,7 +38,7 @@ public class TrainingTask implements Task {
 				i.getTabs().open(Tab.ATTACK);
 				RS2Widget widg = i.getWidgets().containingText(getSkill().getActions()).get(0);
 				if (widg != null && widg.isVisible()) {
-					UtilSleep.sleep(i, 100, 250);
+					UtilSleep.sleep(100, 250);
 					widg.hover();
 					i.getMouse().click(false);
 					new CustomSleep(() -> i.getConfigs().get(STYLE_CONFIG) == getSkill().getStyleConfig(), 1000).sleep();

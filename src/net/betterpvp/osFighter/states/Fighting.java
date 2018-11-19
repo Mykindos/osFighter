@@ -68,7 +68,7 @@ public class Fighting extends ScriptState{
 
 				if(task.validate(i)){
 					task.runTask(i);
-					data.getTaskSchedule().remove(task);
+
 				}
 			}
 		}
@@ -123,7 +123,7 @@ public class Fighting extends ScriptState{
 
 						if(i.getInventory().interact("Wield", data.getSpecWeapon().getFilter())) {
 							new CustomSleep(() -> i.getEquipment().contains(data.getSpecWeapon().getFilter()), 5000).sleep();
-							UtilSleep.sleep(i, 100, 200);
+							UtilSleep.sleep(100, 200);
 							return;
 						}
 					}
@@ -174,7 +174,7 @@ public class Fighting extends ScriptState{
 
 		if(!data.isAFKMode()){
 		if(npc != null) {
-			UtilSleep.sleep(i, 100, 250);
+			UtilSleep.sleep(100, 250);
 			if (npc.interact("Attack")) {
 				lastNPC = npc;
 				new CustomSleep(() -> (i.myPlayer().getInteracting() != null && i.myPlayer().isUnderAttack())
@@ -191,7 +191,7 @@ public class Fighting extends ScriptState{
 					}
 				}
 
-				UtilSleep.sleep(i, 250, 500);
+				UtilSleep.sleep(250, 500);
 
 
 			}
@@ -250,7 +250,7 @@ public class Fighting extends ScriptState{
 			if(i.getInventory().contains(item)) {
 				int slot = i.getInventory().getSlot(item);
 				if(i.getInventory().interact(slot, "Wield", "Wear")) {
-					UtilSleep.sleep(i, 100, 225);
+					UtilSleep.sleep(100, 225);
 				}
 			}
 		}

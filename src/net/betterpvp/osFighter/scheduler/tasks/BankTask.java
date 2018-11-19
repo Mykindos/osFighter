@@ -4,14 +4,17 @@ import net.betterpvp.osFighter.Fighter;
 import net.betterpvp.osFighter.scheduler.Task;
 
 public class BankTask implements Task {
+
+    boolean ran = false;
     @Override
     public void runTask(Fighter i) {
         i.getSessionData().setShouldBankNow(true);
+        ran = true;
     }
 
     @Override
     public boolean isComplete(Fighter i) {
-        return false;
+        return ran;
     }
 
     @Override

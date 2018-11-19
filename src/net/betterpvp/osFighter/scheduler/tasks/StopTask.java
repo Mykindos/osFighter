@@ -14,7 +14,7 @@ public class StopTask implements Task {
 
     @Override
     public boolean isComplete(Fighter i) {
-        return true;
+        return false;
     }
 
     @Override

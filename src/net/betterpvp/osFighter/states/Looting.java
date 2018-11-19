@@ -110,7 +110,7 @@ public class Looting extends ScriptState {
         if (gi != null) {
             if (gi.interact("Take")) {
                 new CustomSleep(() -> gi == null || !gi.exists(), 5000).sleep();
-                UtilSleep.sleep(i, 200, 350);
+                UtilSleep.sleep(200, 350);
 
                 if(i.getInventory().isFull()) {
                     for(Item x : i.getInventory().getItems()) {
@@ -121,7 +121,7 @@ public class Looting extends ScriptState {
                                 int slot = i.getInventory().getSlot(x);
                                 i.getInventory().interact(slot, "Bury");
                                 new CustomSleep(() -> i.getInventory().getItemInSlot(slot) == null, 1000).sleep();
-                                UtilSleep.sleep(i, 250, 350);
+                                UtilSleep.sleep(250, 350);
                             }
                         }
                     }
@@ -137,7 +137,7 @@ public class Looting extends ScriptState {
                                     if (i.getMagic().castSpell(Spells.NormalSpells.LOW_LEVEL_ALCHEMY)) {
                                         i.getInventory().getItem(gi.getName()).hover();
                                         i.getMouse().click(false);
-                                        UtilSleep.sleep(i, 500, 750);
+                                        UtilSleep.sleep(500, 750);
                                     }
                                 }
                             } else if (lc == LootCondition.HIGH_ALCH) {
@@ -146,7 +146,7 @@ public class Looting extends ScriptState {
                                         i.getInventory().getItem(gi.getName()).hover();
                                         i.getMouse().click(false);
 
-                                        UtilSleep.sleep(i, 500, 750);
+                                        UtilSleep.sleep( 500, 750);
                                     }
                                 }
                             }

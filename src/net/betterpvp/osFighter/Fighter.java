@@ -1,14 +1,18 @@
 package net.betterpvp.osFighter;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.*;
 
 import javax.swing.SwingUtilities;
 
+import net.betterpvp.osFighter.managers.paint.SkillExperience;
+import net.betterpvp.osFighter.portal.OSPortal;
 import net.betterpvp.osFighter.states.*;
 import net.betterpvp.osFighter.states.looting.LootedItem;
+import net.betterpvp.osFighter.utilities.UtilTime;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
@@ -20,7 +24,9 @@ import net.betterpvp.osFighter.managers.MouseListener;
 import net.betterpvp.osFighter.managers.Paint;
 
 
-@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 0.1, logo = "http://mykindos.me/osFighter/osfighter_logo.png")
+
+
+@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 1.0, logo = "http://mykindos.me/osFighter/osfighter_logo.png")
 public class Fighter extends Script{
 
 	public boolean started;
@@ -30,16 +36,24 @@ public class Fighter extends Script{
 	private GUI gui;
 	boolean definingArea;
 
+
+
+
+	private OSPortal portal;
+
 	@Override
 	public void onStart(){
+
+		portal = new OSPortal(this);
+		portal.start();
 
 
 
 	
 
 		new AntiBanManager(this);
-	
 
+		data = new SessionData();
 		listener = new Paint(this);
 		getBot().addKeyListener(new KeyListener(this));
 		getBot().addMouseListener(new MouseListener(this));
@@ -47,7 +61,7 @@ public class Fighter extends Script{
 		getBot().addPainter(listener);
 		getBot().addMessageListener(listener);
 
-		data = new SessionData();
+
 		
 		log("Version: " + getVersion());
 		if(getParameters() != null && !getParameters().equalsIgnoreCase("none")){
@@ -69,6 +83,8 @@ public class Fighter extends Script{
 
 	}
 
+
+
 	@Override
 	public void onExit(){
 		
@@ -81,6 +97,8 @@ public class Fighter extends Script{
 		log("Like the script? Leave a review here:");
 		//log("https://osbot.org/forum/store/product/662-osminer/");
 		log("----");
+
+		portal.stop();
 	}
 
 	@Override
@@ -242,5 +260,7 @@ public class Fighter extends Script{
 	public boolean isDefiningArea() {
 		return definingArea;
 	}
+
+
 
 }

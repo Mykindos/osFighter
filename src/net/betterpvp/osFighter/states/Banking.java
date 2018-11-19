@@ -45,7 +45,7 @@ public class Banking extends ScriptState {
                     if (i.getBank().withdraw(w.getItemName(), w.getAmount())) {
                         new CustomSleep(() -> i.getInventory().contains(w.getItemName())
                                 && i.getInventory().getAmount(w.getItemName()) >= w.getAmount(), 1000).sleep();
-                        UtilSleep.sleep(i, 100, 250);
+                        UtilSleep.sleep(100, 250);
                     }
                 }
             });
@@ -79,7 +79,7 @@ public class Banking extends ScriptState {
                 UtilWalking.webWalk(i, closestBank, null, true);
 
 
-                UtilSleep.sleep(i, 200, 400);
+                UtilSleep.sleep(200, 400);
             }
 
 

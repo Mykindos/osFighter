@@ -90,7 +90,7 @@ public class Prayer extends ScriptState {
                 }
                 if (i.getInventory().interact("Drink", prayerPots)) {
                     new CustomSleep(() -> i.getSkills().getDynamic(Skill.PRAYER) > points, 5000).sleep();
-                    UtilSleep.sleep(i, 100, 250);
+                    UtilSleep.sleep(100, 250);
                 }
             }else{
                 return;
@@ -131,7 +131,7 @@ public class Prayer extends ScriptState {
     private boolean activatePrayer(Fighter i, PrayerButton button){
         if (i.getPrayer().set(button, true)){
             new CustomSleep(() -> i.getPrayer().isActivated(button), 1000).sleep();
-            UtilSleep.sleep(i, 200, 500);
+            UtilSleep.sleep(200, 500);
             return true;
         }
 
