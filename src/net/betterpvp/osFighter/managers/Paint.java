@@ -9,8 +9,12 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+import java.beans.SimpleBeanInfo;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,6 +25,7 @@ import java.util.Locale;
 import javax.imageio.ImageIO;
 
 import net.betterpvp.osFighter.data.SessionData;
+import net.betterpvp.osFighter.utilities.UtilFile;
 import net.betterpvp.osFighter.utilities.UtilTime;
 import org.osbot.rs07.api.map.Position;
 import org.osbot.rs07.api.ui.Message;
@@ -40,6 +45,7 @@ import net.betterpvp.osFighter.managers.paint.objects.UpdatingLabel;
 
 public class Paint extends BotMouseListener implements Painter, MessageListener {
 
+
     private Fighter i;
     public int mined = 0;
     private Point pos;
@@ -52,12 +58,14 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
     private Color cursorColor = Color.CYAN;
     private AffineTransform oldTransform;
     private LinkedList<MousePathPoint> mousePath = new LinkedList<>();
-
+    private String url = "http://mykindos.me/osFighter/";
+    private String dir;
 
     public Paint(Fighter i) {
         this.i = i;
+        dir = getInstance().getDirectoryData() + "osFighter/";
         SessionData data = i.getSessionData();
-        String url = "http://mykindos.me/osFighter/";
+
         i.getSkills().getExperienceTracker().start(Skill.HITPOINTS);
         i.getSkills().getExperienceTracker().start(Skill.ATTACK);
         i.getSkills().getExperienceTracker().start(Skill.STRENGTH);
@@ -68,14 +76,16 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
 
         try {
-            data.getExpTrack().add(new SkillExperience(i, Skill.HITPOINTS, ImageIO.read(new URL(url + "Hitpoints.png"))));
-            data.getExpTrack().add(new SkillExperience(i, Skill.ATTACK, ImageIO.read(new URL(url + "Attack.png"))));
-            data.getExpTrack().add(new SkillExperience(i, Skill.STRENGTH, ImageIO.read(new URL(url + "Strength.png"))));
-            data.getExpTrack().add(new SkillExperience(i, Skill.DEFENCE, ImageIO.read(new URL(url + "Defence.png"))));
-            data.getExpTrack().add(new SkillExperience(i, Skill.RANGED, ImageIO.read(new URL(url + "Ranged.png"))));
-            data.getExpTrack().add(new SkillExperience(i, Skill.MAGIC, ImageIO.read(new URL(url + "Magic.png"))));
-            data.getExpTrack().add(new SkillExperience(i, Skill.PRAYER, ImageIO.read(new URL(url + "Prayer.png"))));
-            addPaintObject(new PaintImage("Active Paint", 0, 309, ImageIO.read(new URL(url + "paint.png"))));
+            data.getExpTrack().add(new SkillExperience(i, Skill.HITPOINTS, UtilFile.loadImage(dir, url, "Hitpoints.png")));
+            data.getExpTrack().add(new SkillExperience(i, Skill.ATTACK, UtilFile.loadImage(dir, url,"Attack.png")));
+            data.getExpTrack().add(new SkillExperience(i, Skill.STRENGTH, UtilFile.loadImage(dir, url,"Strength.png")));
+            data.getExpTrack().add(new SkillExperience(i, Skill.DEFENCE, UtilFile.loadImage(dir, url, "Defence.png")));
+            data.getExpTrack().add(new SkillExperience(i, Skill.RANGED, UtilFile.loadImage(dir, url, "Ranged.png")));
+            data.getExpTrack().add(new SkillExperience(i, Skill.MAGIC,UtilFile.loadImage(dir, url, "Magic.png")));
+            data.getExpTrack().add(new SkillExperience(i, Skill.PRAYER, UtilFile.loadImage(dir, url, "Prayer.png")));
+
+            BufferedImage paintImg = UtilFile.loadImage(dir, url, "paint.png");
+            addPaintObject(new PaintImage("Active Paint", 0, 309, paintImg));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -136,16 +146,16 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
                 g.drawPolygon(i.getSessionData().getResetPosition().getPolygon(i.getBot()));
             }
 
-            if(i.getSessionData().isAFKMode() && i.getSessionData().getResetPosition() == null){
+            if (i.getSessionData().isAFKMode() && i.getSessionData().getResetPosition() == null) {
                 g.setColor(Color.RED);
                 Font f1 = new Font("Calibri", Font.BOLD, 20);
                 g.setFont(f1);
                 g.drawString("You have not set a reset tile!", 11, 365);
-                g.drawString("Press F4 to set the reset tile where you are standing",11, 385);
+                g.drawString("Press F4 to set the reset tile where you are standing", 11, 385);
                 return;
             }
 
-            if(i.getSessionData().isSafeSpotting() && i.getSessionData().getSafeSpot() == null){
+            if (i.getSessionData().isSafeSpotting() && i.getSessionData().getSafeSpot() == null) {
                 g.setColor(Color.RED);
                 Font f1 = new Font("Calibri", Font.BOLD, 16);
                 g.setFont(f1);
@@ -164,7 +174,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
             int x = 9;
             int y = 345;
-            for (SkillExperience e :  i.getSessionData().getExpTrack()) {
+            for (SkillExperience e : i.getSessionData().getExpTrack()) {
                 if (e.getGainedExp() <= 0) continue;
                 if (x >= 260) {
                     x = 9;
@@ -231,9 +241,6 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
     public Fighter getInstance() {
         return this.i;
     }
-
-
-
 
 
     public void loadCommonLabels() {
@@ -304,12 +311,12 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
     @Override
     public void checkMouseEvent(MouseEvent e) {
-        if(getPaintObject("Edit Settings").getRectangle().contains(e.getPoint())) {
+        if (getPaintObject("Edit Settings").getRectangle().contains(e.getPoint())) {
             if (i.getGUI() == null) return;
 
             i.started = false;
             i.getGUI().setVisible(true);
-            if(!i.getBot().getScriptExecutor().isPaused()) {
+            if (!i.getBot().getScriptExecutor().isPaused()) {
                 e.consume();
             }
         } else if (getPaintObject("Active Paint").getRectangle().contains(e.getPoint())) {
@@ -331,7 +338,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
                 paintEnabled = true;
             }
-            if(!i.getBot().getScriptExecutor().isPaused()) {
+            if (!i.getBot().getScriptExecutor().isPaused()) {
                 e.consume();
             }
 
@@ -344,6 +351,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
     @Override
     public void onMessage(Message arg0) throws InterruptedException {
     }
+
 
 
 }

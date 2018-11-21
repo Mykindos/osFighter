@@ -56,7 +56,7 @@ public abstract class AntiBan{
 	}
 	
 	public void logAB(){
-		getInstance().log("AntiBan: " + getName());
+		//getInstance().log("AntiBan: " + getName());
 	}
 
 }

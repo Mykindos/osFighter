@@ -24,8 +24,9 @@ public class PaintImage extends PaintObject{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(image, getX(), getY(), null);
-		
+		if(image != null) {
+			g.drawImage(image, getX(), getY(), null);
+		}
 	}
 
 	@Override
