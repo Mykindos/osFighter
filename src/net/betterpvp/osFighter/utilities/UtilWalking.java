@@ -40,17 +40,34 @@ public class UtilWalking {
 
 		e.setPathPreferenceProfile(prof);
 
-		if(STRONGHOLD.contains(i.myPosition())){
+		if(STRONGHOLD.contains(i.myPosition()) || (e.getDestination() != null && STRONGHOLD.contains(e.getDestination()))){
+			e.setAsync();
 
-			e.setBreakCondition(new Condition(){
+			i.log("Walking in stronghold");
+			i.execute(e);
+			long start = System.currentTimeMillis();
+			while(!e.hasFinished() || !e.hasFailed()){
 
-				@Override
-				public boolean evaluate() {
-					return i.getDialogues().isPendingContinuation() || i.getDialogues().isPendingOption();
+				if(i.getDialogues().isPendingContinuation() || i.getDialogues().isPendingOption()){
+					e.setFailed();
+					e.interrupt();
+					i.log("Cancelled web");
+					break;
+				}
+
+				if(UtilTime.elapsed(start, 7000)){
+					e.setFailed();
+					e.interrupt();
+					break;
 				}
 
 
-			});
+
+				i.sleep(100);
+			}
+
+			return e.hasFinished();
+
 		}
 
 		if(breakCondition != null) {
@@ -82,17 +99,26 @@ public class UtilWalking {
 
 		e.setPathPreferenceProfile(prof);
 
-		if(STRONGHOLD.contains(i.myPosition())){
 
-			e.setBreakCondition(new Condition(){
+		if(STRONGHOLD.contains(i.myPosition()) || (e.getDestination() != null && STRONGHOLD.contains(e.getDestination()))){
+			e.setAsync();
 
-				@Override
-				public boolean evaluate() {
-					return i.getDialogues().isPendingContinuation() || i.getDialogues().isPendingOption();
+			i.log("Walking in stronghold");
+			i.execute(e);
+			while(!e.hasFinished() || !e.hasFailed()){
+				i.log("Thread stall");
+				if(i.getDialogues().isPendingContinuation() || i.getDialogues().isPendingOption()){
+					e.setFailed();
+					e.interrupt();
+					i.log("Cancelled web");
+					break;
 				}
 
+				i.sleep(100);
+			}
 
-			});
+			return e.hasFinished();
+
 		}
 
 		if(breakCondition != null) {
@@ -119,22 +145,21 @@ public class UtilWalking {
 	public static Area getClosestBank(Position myPosition) throws InterruptedException {
 
 
-		for(BankOverrides b : BankOverrides.values()){
+		for(Bank b : Bank.values()){
 			if(b.getArea().contains(myPosition)){
 				return b.getArea();
 			}
 		}
 
+		for(BankOverrides b : BankOverrides.values()){
+			if(b.getArea().contains(myPosition)){
+				return b.getBank().getArea();
+			}
+		}
+
 
 		List<Area> banks = Arrays.asList(Bank.getBankArea());
-		banks.sort(new Comparator<Area>() {
-
-			@Override
-			public int compare(Area a, Area b) {
-				return myPosition.distance(a.getRandomPosition()) - myPosition.distance(b.getRandomPosition());
-			}
-			
-		});
+		banks.sort(Comparator.comparingInt(a -> myPosition.distance(a.getRandomPosition())));
 	
 
 
@@ -143,6 +168,7 @@ public class UtilWalking {
 	}
 
 	public static Area getArea(Position p, int size){
+
 		return new Area(p.translate(-size, -size), p.translate(size, size));
 	}
 

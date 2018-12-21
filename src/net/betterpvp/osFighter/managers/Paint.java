@@ -1,11 +1,6 @@
 package net.betterpvp.osFighter.managers;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
@@ -60,6 +55,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
     private LinkedList<MousePathPoint> mousePath = new LinkedList<>();
     private String url = "http://mykindos.me/osFighter/";
     private String dir;
+    private PaintImage activePaint;
 
     public Paint(Fighter i) {
         this.i = i;
@@ -85,7 +81,9 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
             data.getExpTrack().add(new SkillExperience(i, Skill.PRAYER, UtilFile.loadImage(dir, url, "Prayer.png")));
 
             BufferedImage paintImg = UtilFile.loadImage(dir, url, "paint.png");
-            addPaintObject(new PaintImage("Active Paint", 0, 309, paintImg));
+            activePaint = new PaintImage("Active Paint", 0, i.getDisplay().getScreenHeight() - 22 - paintImg.getHeight(), paintImg);
+            addPaintObject(activePaint);
+            //addPaintObject(new PaintImage("Active Paint", 0, 309, paintImg));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -131,6 +129,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
     public void draw(Graphics2D g) {
         if (paintEnabled) {
+
             for (PaintObject p : po) {
                 if (p.isEnabled()) {
                     p.draw(g);
@@ -173,7 +172,7 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
             });
 
             int x = 9;
-            int y = 345;
+            int y = activePaint.getY() + 35;
             for (SkillExperience e : i.getSessionData().getExpTrack()) {
                 if (e.getGainedExp() <= 0) continue;
                 if (x >= 260) {
@@ -210,9 +209,11 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
         for (PaintObject p : po) {
             if (p.isEnabled()) {
                 p.update(this);
-                ;
+
             }
         }
+
+        activePaint.setY(i.getDisplay().getScreenHeight() - 22 - activePaint.getHeight());
     }
 
     public void addPaintObject(PaintObject p) {
@@ -244,21 +245,28 @@ public class Paint extends BotMouseListener implements Painter, MessageListener 
 
 
     public void loadCommonLabels() {
+        int paintY = getPaintObject("Active Paint").getY();
         addPaintObject(new Label("Version", 5, 15, "v" + i.getVersion()));
         addPaintObject(new Label("Hotkeys", 5, 27, "Hotkeys"));
         addPaintObject(new Label("F1", 5, 39, "F1: Enable Area Selection"));
         addPaintObject(new Label("F2", 5, 51, "F2: Disable Area Selection"));
         addPaintObject(new Label("F3", 5, 63, "F3: Set Safe Spot"));
         addPaintObject(new Label("F4", 5, 75, "F4: Set Reset Position"));
-        addPaintObject(new UpdatingLabel("TimeRunning", 335, 338) {
+        addPaintObject(new UpdatingLabel("TimeRunning", 335, paintY + 27) {
             @Override
             public void update(Paint p) {
-
+                setY(getPaintObject("Active Paint").getY() + 27);
                 setText("Time Ran: " + UtilTime.totalTime((int) i.getSkills().getExperienceTracker().getElapsed(Skill.HITPOINTS)));
             }
         });
 
-        addCommonPaintObject(new Label("Edit Settings", 335, 321, 100, 20, "Edit Settings"));
+        addPaintObject(new UpdatingLabel("Edit Settings", 335, paintY + 15, 100, 18) {
+            @Override
+            public void update(Paint p) {
+                setY(getPaintObject("Active Paint").getY() + 15);
+                setText("Edit Settings");
+            }
+        });
     }
 
     private void drawMouse(Fighter instance, Graphics2D g) {

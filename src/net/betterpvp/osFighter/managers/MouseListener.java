@@ -40,7 +40,7 @@ public class MouseListener extends BotMouseListener{
 							if(data.getCombatAreaPositions().size() == 2) {
 								Position a = data.getCombatAreaPositions().get(0);
 								Position b = data.getCombatAreaPositions().get(1);
-								data.setCombatArea(new Area(a.getX(), a.getY(), b.getX(), b.getY()));
+								data.setCombatArea(new Area(a.getX(), a.getY(), b.getX(), b.getY()).setPlane(i.myPosition().getZ()));
 							}else {
 								data.setCombatArea(new Area(data.getCombatAreaPositions().toArray(new Position[data.getCombatAreaPositions().size()])));
 							}

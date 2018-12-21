@@ -33,6 +33,8 @@ public class SessionData {
 	private int useGuthansBelow;
 	private int eatBelowHealth, eatBelowHealthDeviation;
 	private String[] foodToEat;
+
+
 	
 	// Potion Variables
 	private boolean drinkPotions;
@@ -49,7 +51,8 @@ public class SessionData {
 	private boolean isBanking;
 	private boolean isDepositingInventory;
 	private List<WithdrawData> withdrawData = new ArrayList<>();
-	private boolean shouldBankNow;
+	private boolean shouldBankNow, depositInvOverride;
+	private boolean eatAtBank;
 	
 	//Prayer
 	private boolean usePrayer;
@@ -77,6 +80,9 @@ public class SessionData {
 
 	private Queue<Task> taskSchedule = new ConcurrentLinkedQueue<>();
 	private List<SkillExperience> expTrack = new CopyOnWriteArrayList<>();
+
+	private boolean isPickingUpByValue;
+	private int minPricePickup;
 	
 	public SessionData(){
 
@@ -296,7 +302,7 @@ public class SessionData {
 	}
 
 	public void setFoodToEat(String foodString) {
-		this.foodToEat = foodString.replaceAll(" ", "").split(",");
+		this.foodToEat = foodString.replaceAll(", ", ",").split(",");
 	}
 
 	public boolean isEatingFood() {
@@ -467,5 +473,37 @@ public class SessionData {
 
 	public List<SkillExperience> getExpTrack() {
 		return expTrack;
+	}
+
+	public boolean isEatAtBank() {
+		return eatAtBank;
+	}
+
+	public void setEatAtBank(boolean eatAtBank) {
+		this.eatAtBank = eatAtBank;
+	}
+
+	public boolean isDepositInvOverride() {
+		return depositInvOverride;
+	}
+
+	public void setDepositInvOverride(boolean depositInvOverride) {
+		this.depositInvOverride = depositInvOverride;
+	}
+
+	public boolean isPickingUpByValue() {
+		return isPickingUpByValue;
+	}
+
+	public void setPickingUpByValue(boolean pickingUpByValue) {
+		isPickingUpByValue = pickingUpByValue;
+	}
+
+	public int getMinPricePickup() {
+		return minPricePickup;
+	}
+
+	public void setMinPricePickup(int minPricePickup) {
+		this.minPricePickup = minPricePickup;
 	}
 }

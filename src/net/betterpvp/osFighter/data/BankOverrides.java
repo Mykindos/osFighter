@@ -31,7 +31,8 @@ public enum BankOverrides {
     KOUREND_DUNGEON(new Area(1586, 10118, 1744, 9974), Bank.KOUREND),
     CHASM_OF_FIRE_1(new Area(1404, 10109, 1470, 10046), Bank.KOUREND),
     CHASM_OF_FIRE_2(new Area(1404, 10109, 1470, 10046).setPlane(1), Bank.KOUREND),
-    CHASM_OF_FIRE_3(new Area(1404, 10109, 1470, 10046).setPlane(2), Bank.KOUREND);
+    CHASM_OF_FIRE_3(new Area(1404, 10109, 1470, 10046).setPlane(2), Bank.KOUREND),
+    STRONGHOLD_SLAYER_DUNGEON(new Area(2377, 9842, 2497, 9764), Bank.NIEVE_BANK);
 
 
 
@@ -40,7 +41,8 @@ public enum BankOverrides {
     private Bank b;
 
     BankOverrides(Area a, Bank b){
-
+        this.a = a;
+        this.b = b;
     }
 
     public Area getArea(){

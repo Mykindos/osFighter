@@ -38,7 +38,7 @@ public abstract class PaintObject {
 	}
 	
 	public Rectangle getRectangle(){
-		return this.rectangle;
+		return new Rectangle(x, y, width, height);
 	}
 	
 	public boolean isEnabled(){
@@ -55,6 +55,10 @@ public abstract class PaintObject {
 	
 	public int getY(){
 		return this.y;
+	}
+
+	public void setY(int y){
+		this.y = y;
 	}
 	
 	public int getHeight(){

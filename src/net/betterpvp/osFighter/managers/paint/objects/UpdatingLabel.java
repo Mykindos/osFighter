@@ -1,8 +1,6 @@
 package net.betterpvp.osFighter.managers.paint.objects;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 import net.betterpvp.osFighter.managers.Paint;
 import net.betterpvp.osFighter.managers.paint.PaintObject;
@@ -30,6 +28,19 @@ public class UpdatingLabel extends PaintObject{
 		super(ID, x, y, 1, 1);
 		this.colour = Color.WHITE;
 		this.font = new Font("Calibri", Font.BOLD, 16);
+
+	}
+
+	public UpdatingLabel(String ID, int x, int y, int width, int height) {
+		super(ID, x, y, width, height);
+		this.colour = Color.WHITE;
+		this.font = new Font("Calibri", Font.BOLD, 16);
+
+	}
+
+	@Override
+	public Rectangle getRectangle(){
+		return new Rectangle(getX(), getY() - 16, getWidth(), getHeight());
 	}
 
 	@Override

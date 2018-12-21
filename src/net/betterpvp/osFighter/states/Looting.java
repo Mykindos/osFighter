@@ -1,5 +1,6 @@
 package net.betterpvp.osFighter.states;
 
+import net.betterpvp.osFighter.utilities.UtilPrice;
 import org.osbot.rs07.api.model.GroundItem;
 import org.osbot.rs07.api.model.Item;
 import org.osbot.rs07.api.ui.Spells;
@@ -20,7 +21,7 @@ public class Looting extends ScriptState {
     @Override
     public boolean validate(Fighter i) throws InterruptedException {
 
-        if (i.getSessionData().getLootableItems().isEmpty()) {
+        if (i.getSessionData().getLootableItems().isEmpty() && !i.getSessionData().isPickingUpByValue()) {
             return false;
         }
 
@@ -57,6 +58,12 @@ public class Looting extends ScriptState {
                             gA.getItemName().equalsIgnoreCase(g.getName()))) {
 
                         return true;
+                    }
+
+                    if(i.getSessionData().isPickingUpByValue()) {
+                        if (UtilPrice.getPrice(g.getId()) >= i.getSessionData().getMinPricePickup()) {
+                            return true;
+                        }
                     }
                 }
 
@@ -95,11 +102,19 @@ public class Looting extends ScriptState {
 
         GroundItem gi = i.getGroundItems().closest(g -> {
 
+
+
             for (LootedItem li : i.getSessionData().getLootableItems()) {
                 if (li.getItemName().equalsIgnoreCase(g.getName())) {
                     if (li.getLootCondition() == LootCondition.NOTED && !g.getDefinition().isNoted())
                         continue; // Only pick up if noted
                     lc = li.getLootCondition();
+                    return true;
+                }
+            }
+
+            if(i.getSessionData().isPickingUpByValue()){
+                if(UtilPrice.getPrice(g.getId()) >= i.getSessionData().getMinPricePickup()){
                     return true;
                 }
             }

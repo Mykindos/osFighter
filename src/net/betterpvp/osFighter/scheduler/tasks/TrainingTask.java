@@ -41,7 +41,8 @@ public class TrainingTask implements Task {
 					UtilSleep.sleep(100, 250);
 					widg.hover();
 					i.getMouse().click(false);
-					new CustomSleep(() -> i.getConfigs().get(STYLE_CONFIG) == getSkill().getStyleConfig(), 1000).sleep();
+					new CustomSleep(() -> i.getConfigs().get(STYLE_CONFIG) == getSkill().getStyleConfig()
+							|| i.getConfigs().get(STYLE_CONFIG) == getSkill().getAltConfig(), 1000).sleep();
 				}
 
 
@@ -58,7 +59,8 @@ public class TrainingTask implements Task {
 
 	@Override
 	public boolean validate(Fighter i) {
-		return i.getConfigs().get(STYLE_CONFIG) != getSkill().getStyleConfig();
+		return i.getConfigs().get(STYLE_CONFIG) != getSkill().getStyleConfig()
+				&& i.getConfigs().get(STYLE_CONFIG) != getSkill().getAltConfig();
 	}
 
 	@Override

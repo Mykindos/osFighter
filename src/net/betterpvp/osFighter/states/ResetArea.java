@@ -10,17 +10,18 @@ public class ResetArea extends ScriptState {
     @Override
     public boolean validate(Fighter i) throws InterruptedException {
         return i.getSessionData().getResetPosition() != null
-            && UtilTime.elapsed(i.getSessionData().getLastAttacked(), 10000);
+            && UtilTime.elapsed(i.getSessionData().getLastAttacked(), 10000)
+                && i.getSessionData().getLastAttacked() > 0
+                && !i.getCombat().isFighting();
     }
 
     @Override
     public void run(Fighter i) throws InterruptedException {
             SessionData data = i.getSessionData();
+            i.log("Test1");
         if(data.getResetPosition().distance(i.myPlayer()) > 5){
             UtilWalking.webWalk(i, UtilWalking.getArea(data.getResetPosition(), 3), null, false);
-        }else{
-            data.setLastAttacked(System.currentTimeMillis());
         }
-
+        data.setLastAttacked(0);
     }
 }

@@ -1,6 +1,7 @@
 package net.betterpvp.osFighter.states;
 
 import net.betterpvp.osFighter.scheduler.Task;
+import net.betterpvp.osFighter.utilities.UtilMath;
 import net.betterpvp.osFighter.utilities.UtilWalking;
 import org.osbot.rs07.api.filter.ContainsNameFilter;
 import org.osbot.rs07.api.map.Position;
@@ -29,6 +30,7 @@ public class Fighting extends ScriptState{
 
 	@Override
 	public boolean validate(Fighter i) throws InterruptedException {
+
 		return i.getSessionData().getCurrentTargets().size() > 0; // Default state
 	}
 
@@ -36,22 +38,28 @@ public class Fighting extends ScriptState{
 	@Override
 	public void run(Fighter i) throws InterruptedException {
 		SessionData data = i.getSessionData();
+		i.log("Test2");
 
 		if(data.getCombatAreaPositions().size() == 0 && data.getStartPosition().distance(i.myPosition()) > 50) {
+
 			UtilWalking.webWalk(i, new Position[] {data.getStartPosition()}, null, true);
 			return;
 		}else {
 			if(data.getCombatAreaPositions().size() == 1) {
 				if(i.myPosition().distance(data.getCombatAreaPositions().get(0)) > 30) {
+
 					UtilWalking.webWalk(i, new Position[] {data.getCombatAreaPositions().get(0)}, null, true);
 
 				}
 			}else {
-				if(data.getCombatArea().getPositions().size() != 1) {
+				if(data.getCombatArea().getPositions().size() > 1) {
 
-					if (!data.getCombatArea().contains(i.myPlayer())) {
-						UtilWalking.webWalk(i, data.getCombatArea(), null, true);
+					if(data.getCombatArea() != null) {
+						if (!data.getCombatArea().contains(i.myPlayer())) {
 
+							UtilWalking.webWalk(i, data.getCombatArea(), null, true);
+
+						}
 					}
 				}
 			}
@@ -78,12 +86,15 @@ public class Fighting extends ScriptState{
 				(i.myPlayer().getInteracting() != null && lastNPC != null && i.myPlayer().getInteracting() == lastNPC
 				&& lastNPC.getHealthPercent() > 0)) {
 			// Maybe add a hover option when target is low health
-			data.setLastAttacked(System.currentTimeMillis());
+			if(data.isAFKMode() && i.myPosition().getX() == data.getSafeSpot().getX() && i.myPosition().getY() == data.getSafeSpot().getY()) {
+				data.setLastAttacked(System.currentTimeMillis());
+			}
 
 
 
 			if(data.isSafeSpotting()) {
 				if (i.myPosition().getX() != data.getSafeSpot().getX() || i.myPosition().getY() != data.getSafeSpot().getY()) {
+					UtilWalking.webWalk(i, new Position[]{data.getSafeSpot()}, null, false);
 					walkSafeSpot(i);
 					return;
 
@@ -176,6 +187,14 @@ public class Fighting extends ScriptState{
 		if(npc != null) {
 			UtilSleep.sleep(100, 250);
 			if (npc.interact("Attack")) {
+
+				if(UtilMath.randInt(0, 10) > 8){
+					i.getMouse().moveOutsideScreen();
+				}else{
+					UtilSleep.sleep(100, 300);
+					i.getMouse().move(UtilMath.randInt(0, i.getDisplay().getScreenWidth()), UtilMath.randInt(0, i.getDisplay().getScreenHeight()));
+				}
+
 				lastNPC = npc;
 				new CustomSleep(() -> (i.myPlayer().getInteracting() != null && i.myPlayer().isUnderAttack())
 						|| (npc.isUnderAttack() && i.myPlayer().getInteracting() != null && i.myPlayer().getInteracting() == npc
@@ -185,6 +204,9 @@ public class Fighting extends ScriptState{
 				if (data.isSafeSpotting()) {
 					if (i.myPosition().getX() != data.getSafeSpot().getX() || i.myPosition().getY() != data.getSafeSpot().getY()) {
 						i.log("Walking to safespot");
+						if(i.myPosition().distance(data.getSafeSpot()) > 25) {
+							UtilWalking.webWalk(i, new Position[]{data.getSafeSpot()}, null, false);
+						}
 						walkSafeSpot(i);
 						return;
 
@@ -196,7 +218,16 @@ public class Fighting extends ScriptState{
 
 			}
 		}
+		}/*else{
+			if(data.getSafeSpot() != null) {
+				if (i.myPosition().getX() == data.getSafeSpot().getX() && i.myPosition().getY() == data.getSafeSpot().getY()) {
+					if(!i.myPlayer().isUnderAttack()) {
+						data.setLastAttacked(System.currentTimeMillis() - 10000);
+					}
+				}
+			}
 		}
+		*/
 
 	}
 
@@ -260,7 +291,9 @@ public class Fighting extends ScriptState{
 
 	private void walkSafeSpot(Fighter i){
 		SessionData data = i.getSessionData();
+
 		WalkingEvent ev = new WalkingEvent(data.getSafeSpot());
+
 		ev.setMinDistanceThreshold(0);
 		ev.setMiniMapDistanceThreshold(0);
 

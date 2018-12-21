@@ -15,9 +15,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library">
-      <library name="osbot 2.5.25.jar">
+      <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Downloads/osbot 2.5.25.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Downloads/OSBot 2.5.30.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

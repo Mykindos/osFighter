@@ -7,7 +7,7 @@ import org.osbot.rs07.api.map.constants.Banks;
 
 public enum Bank {
 
-	AUTO("Auto", null),
+	AUTO("Auto", new Area(0,0,0,0)),
 	LUMBRIDGE_UPPER("Lumbridge Upper", Banks.LUMBRIDGE_UPPER),
 	LUMBRIDGE_LOWER("Lumbridge Lower", Banks.LUMBRIDGE_LOWER),
 	AL_KHARID("Al Kharid", Banks.AL_KHARID),
@@ -24,6 +24,7 @@ public enum Bank {
 	FALADOR_EAST("Falador East", Banks.FALADOR_EAST),
 	FALADOR_WEST("Falador West", Banks.FALADOR_WEST),
 	GNOME_STRONGHOLD("Gnome Stronghold", Banks.GNOME_STRONGHOLD),
+	NIEVE_BANK("Nieve Bank (Gnome Stronghold)", new Area(2449, 3435, 2442, 3414).setPlane(1)),
 	GRAND_EXCHANGE("Grand Exchange", Banks.GRAND_EXCHANGE),
 	HOSIDIUS_HOUSE("Hosidius House", Banks.HOSIDIUS_HOUSE),
 	LOVAKENGJ_HOUSE("Lovakenj House", Banks.LOVAKENGJ_HOUSE),
@@ -49,7 +50,7 @@ public enum Bank {
 	private String name;
 	private Area area;
 	
-	private Bank(String name, Area area){
+	Bank(String name, Area area){
 		this.name = name;
 		this.area = area;
 	}

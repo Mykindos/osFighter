@@ -45,6 +45,21 @@ public class EatDrink extends ScriptState implements MessageListener {
                 return true;
             }
 
+            if(data.isBanking()) {
+
+               // i.log("Health Check: " + i.getSkills().getDynamic(Skill.HITPOINTS) + ", " + (i.getSkills().getStatic(Skill.HITPOINTS) - 3));
+                if (i.getSkills().getDynamic(Skill.HITPOINTS) < i.getSkills().getStatic(Skill.HITPOINTS) - 3) {
+
+                    if (data.isEatAtBank()) {
+
+                        if (UtilWalking.getClosestBank(i.myPosition()).contains(i.myPosition())) {
+
+                            return true;
+                        }
+                    }
+                }
+            }
+
 
         }
 
@@ -118,6 +133,7 @@ public class EatDrink extends ScriptState implements MessageListener {
     public void run(Fighter i) throws InterruptedException {
 
 
+
         SessionData data = i.getSessionData();
         if (data.getHealthDeviation() != 0) {
             deviateBy = data.getHealthToEatBelow()
@@ -127,10 +143,33 @@ public class EatDrink extends ScriptState implements MessageListener {
 
         if (data.isEatingFood()) {
 
+            if(data.isBanking()) {
+                if (i.getSkills().getDynamic(Skill.HITPOINTS) < i.getSkills().getStatic(Skill.HITPOINTS) - 3) {
+                    if (data.isEatAtBank()) {
+                        if (UtilWalking.getClosestBank(i.myPosition()).contains(i.myPosition())) {
+                            int healthPct = i.getSkills().getDynamic(Skill.HITPOINTS);
+                            int slot = i.getInventory().getSlot(new ContainsNameFilter<>(data.getFoodToEat()));
+                            if (i.getInventory().interact(slot, "Eat", "Drink")) {
+
+                                new CustomSleep(() -> i.getSkills().getDynamic(Skill.HITPOINTS) > healthPct, 2000).sleep();
+
+                                if (i.getSkills().getDynamic(Skill.HITPOINTS) >= i.getSkills().getStatic(Skill.HITPOINTS) - 3) {
+                                    data.setShouldBankNow(true);
+                                    data.setDepositInvOverride(false);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+
             if (i.getSkills().getDynamic(Skill.HITPOINTS) < (deviateBy == 0 ? data.getHealthToEatBelow() : deviateBy)) {
 
                 int healthPct = i.myPlayer().getHealthPercent();
                 if (i.getInventory().contains(data.getFoodToEat())) {
+
 
                     int slot = i.getInventory().getSlot(new ContainsNameFilter<>(data.getFoodToEat()));
                     if (i.getInventory().interact(slot, "Eat", "Drink")) {
@@ -138,6 +177,7 @@ public class EatDrink extends ScriptState implements MessageListener {
                         new CustomSleep(() -> i.myPlayer().getHealthPercent() > healthPct, 2000).sleep();
                     }
                 } else {
+                    i.log("No Food");
                     data.setShouldBankNow(true);
                     if (data.isBanking()) {
                         Area bank = data.getBank() == Bank.AUTO ? UtilWalking.getClosestBank(i.myPosition()) : data.getBank().getArea();
@@ -149,6 +189,9 @@ public class EatDrink extends ScriptState implements MessageListener {
                             Position p = i.myPosition();
                             i.getInventory().interact("Break", teleportFilter);
                             new CustomSleep(() -> i.myPosition() != p, 10000).sleep();
+                        }else{
+                            Area bank =  UtilWalking.getClosestBank(i.myPosition());
+                            UtilWalking.webWalk(i, bank, null, true);
                         }
                     }
                     // TODO Explore escape options / stopping script

@@ -1,18 +1,10 @@
 package net.betterpvp.osFighter;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.NumberFormat;
 import java.util.*;
 
 import javax.swing.SwingUtilities;
-
-import net.betterpvp.osFighter.managers.paint.SkillExperience;
-import net.betterpvp.osFighter.portal.OSPortal;
 import net.betterpvp.osFighter.states.*;
-import net.betterpvp.osFighter.states.looting.LootedItem;
-import net.betterpvp.osFighter.utilities.UtilTime;
+
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
@@ -26,7 +18,7 @@ import net.betterpvp.osFighter.managers.Paint;
 
 
 
-@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 1.0, logo = "http://mykindos.me/osFighter/osfighter_logo.png")
+@ScriptManifest(author = "Tom", info = "osFighter - AIO Fighting Script", name = "osFighter", version = 1.05, logo = "http://mykindos.me/osFighter/osfighter_logo.png")
 public class Fighter extends Script{
 
 	public boolean started;
@@ -38,16 +30,9 @@ public class Fighter extends Script{
 
 
 
-
-	private OSPortal portal;
-
 	@Override
 	public void onStart(){
-
-		portal = new OSPortal(this);
-		portal.start();
-
-
+		
 
 	
 
@@ -95,15 +80,16 @@ public class Fighter extends Script{
 
 		log("----");
 		log("Like the script? Leave a review here:");
-		//log("https://osbot.org/forum/store/product/662-osminer/");
+		log("https://osbot.org/forum/store/product/689-osfighter/");
 		log("----");
 
-		portal.stop();
+
 	}
 
 	@Override
 	public int onLoop() throws InterruptedException {
 		if(hasStarted()){
+
 
 			for(ScriptState s : states){
 				if(s.execute(this)) {
@@ -114,6 +100,7 @@ public class Fighter extends Script{
 		}
 		return random(150, 250);
 	}
+
 
 	public void start(){
 
@@ -133,7 +120,8 @@ public class Fighter extends Script{
 			states.add(new EatDrink());
 		}
 
-		if(getSessionData().getLootableItems().size() > 0) {
+		if(getSessionData().getLootableItems().size() > 0 || getSessionData().isPickingUpByValue()) {
+
 			states.add(new Looting());
 		}
 
@@ -144,6 +132,7 @@ public class Fighter extends Script{
 		}
 
 		states.add(new AntiPattern());
+
 
 		if(getSessionData().getResetPosition() != null){
 			states.add(new ResetArea());
